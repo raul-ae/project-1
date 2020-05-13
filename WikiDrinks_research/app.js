@@ -17,9 +17,9 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list",
     },
     filter: {
-      category: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`,
-      glass: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`,
-      ingredient: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientName}`,
+      categoryF: category => `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`,
+      glassF: glass => `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`,
+      ingredientF: ingredientName => `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientName}`,
       alcoholFilter: {
         alcoholic:
           "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic",
@@ -28,19 +28,21 @@ $(document).ready(function () {
       },
     },
     lookup: {
-      ingredientsByID: `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=${ingredientID}`,
-      cocktailDetailsByID: `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailID}`,
+      ingredientsByIDF: ingredientID => `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=${ingredientID}`,
+      cocktailDetailsByIDF: cocktailID => `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailID}`,
       randomCocktail: "https://www.thecocktaildb.com/api/json/v1/1/random.php",
     },
     search: {
-      ingredientByName: `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredientName}`,
-      cocktailByName: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`,
+      ingredientByNameF: ingredientName => `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredientName}`,
+      cocktailByNameF: cocktailName =>
+        "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + cocktailName
     },
+  
     image: {
       ingredient: `https://www.thecocktaildb.com/images/ingredients/${ingredientName}.png (700x700 pixels)`,
     },
   };
-  var numberOfRndSuggestions = 9;
+  var numberOfRndSuggestions = 3;
 
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
@@ -60,6 +62,67 @@ $(document).ready(function () {
   }
 
   /* --------------- Search --------------- */
+  $("#searchButton").on("click", function(event){
+    event.preventDefault();
+    cocktailName = $("#drinkInput").val();
+    console.log(cocktailName)
+    console.log(queryURLs.search.cocktailByNameF(cocktailName));
+
+    runAjax("drinkSearch", queryURLs.search.cocktailByNameF(cocktailName), uploadSearch);
+  });
+  
+  // upload search results
+  function uploadSearch(name, resp){
+    resp = resp.drinks[0];
+    console.log(name, resp);
+   
+    console.log("Suggested Drink: ", resp.strDrink);
+    $("#drinkNameH5").text(resp.strDrink);
+    console.log("Suggested Image: ", resp.strDrinkThumb);
+    $("#mainImage").attr("src",resp.strDrinkThumb);
+    console.log(resp.strInstructions)
+    instructionsSteps(resp.strInstructions)
+    ingredients(resp)
+  }
+  
+  function ingredients(value){
+    var ingrArray = [];
+    for (let l=1; l<16; l++){
+      let index = "strIngredient" + l;
+      // if (value.index == null){
+      //   break
+      // } else {
+        ingrArray.push(value.index);
+     // }
+      console.log(value.index);
+    }
+    console.log(ingrArray);
+  }
+  
+
+ function instructionsSteps(instructions){
+   var instSteps = instructions
+   var steps = [];
+   var step = "";
+
+   for (let i=0; i<instSteps.length; i++){
+     if (instSteps[i]=="."){
+       steps.push(step);
+       step="";
+       i++;
+     } else {
+       step= step +instSteps[i]
+     }
+   }
+   console.log(steps);
+   
+   for (let j=0; j<steps.length;j++){
+     var newLi = $("<li>");
+     newLi.text(steps[j]);
+     $("#intructionsList").append(newLi)
+   }
+ };
+
   /* --------------- Filter --------------- */
   // Query the Lists
   runAjax("categoryFilter", queryURLs.list.categories, uploadFilter);
@@ -115,40 +178,6 @@ $(document).ready(function () {
   /* ********************** Event Listeners ********************** */
 });
 
-/* ---------------------------- SendInBlue --------------------------- */
-
-// Node.js SDK: https://github.com/sendinblue/APIv3-nodejs-library
-/* var SibApiV3Sdk = require("sib-api-v3-sdk");
-var defaultClient = SibApiV3Sdk.ApiClient.instance;
-
-// Configure API key authorization: api-key
-var apiKey = defaultClient.authentications["api-key"];
-apiKey.apiKey = "YOUR API KEY";
-
-var apiInstance = new SibApiV3Sdk.ContactsApi();
-
-var createContact = new SibApiV3Sdk.CreateContact(); // CreateContact | Values to create a contact
-createContact = { email: "john@doe.com" };
-
-apiInstance.createContact(createContact).then(
-  function (data) {
-    console.log("API called successfully. Returned data: " + data);
-  },
-  function (error) {
-    console.error(error);
-  }
-); */
-
-/* ---------------------------- /SendInBlue --------------------------- */
-
-/* Selectors 
-$('#drinkInput')
-$(buttons)  ??
-$('#drinkNameH5')
-$('#mainImage')
-$('.recipe ul')
-$('.suggested imgs') ??
-*/
 
 /*
   // Lists
