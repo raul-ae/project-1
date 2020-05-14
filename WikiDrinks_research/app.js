@@ -113,6 +113,7 @@ $(document).ready(function () {
   function ingredients(value) {
     console.log("ingredients()");
     console.log("value: ", value);
+    $("#ingredientsList").empty();
     var ingrArray = [];
     Object.entries(value).forEach(function (entry) {
       let subKey = entry[0].substring(0, 13);
@@ -130,6 +131,7 @@ $(document).ready(function () {
   /* --------------- Recipe --------------- */
   function instructionsSteps(instructions) {
     console.log("instructionsSteps()");
+    $("#intructionsList").empty();
     var instSteps = instructions;
     var steps = [];
     var step = "";
