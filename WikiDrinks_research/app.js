@@ -17,9 +17,12 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list",
     },
     filter: {
-      categoryF: category => `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`,
-      glassF: glass => `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`,
-      ingredientF: ingredientName => `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientName}`,
+      categoryF: (category) =>
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`,
+      glassF: (glass) =>
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`,
+      ingredientF: (ingredientName) =>
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientName}`,
       alcoholFilter: {
         alcoholic:
           "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic",
@@ -28,16 +31,20 @@ $(document).ready(function () {
       },
     },
     lookup: {
-      ingredientsByIDF: ingredientID => `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=${ingredientID}`,
-      cocktailDetailsByIDF: cocktailID => `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailID}`,
+      ingredientsByIDF: (ingredientID) =>
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=${ingredientID}`,
+      cocktailDetailsByIDF: (cocktailID) =>
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailID}`,
       randomCocktail: "https://www.thecocktaildb.com/api/json/v1/1/random.php",
     },
     search: {
-      ingredientByNameF: ingredientName => `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredientName}`,
-      cocktailByNameF: cocktailName =>
-        "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + cocktailName
+      ingredientByNameF: (ingredientName) =>
+        `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredientName}`,
+      cocktailByNameF: (cocktailName) =>
+        "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" +
+        cocktailName,
     },
-  
+
     image: {
       ingredient: `https://www.thecocktaildb.com/images/ingredients/${ingredientName}.png (700x700 pixels)`,
     },
@@ -47,6 +54,7 @@ $(document).ready(function () {
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
   function runAjax(name, url, thenFunction) {
+    console.log("runAjax() - " + name);
     $.ajax({
       url: url,
       method: "GET",
@@ -57,71 +65,17 @@ $(document).ready(function () {
     });
   }
 
-  function printResponse(name, res) {
-    console.log(name, res);
-  }
-
   /* --------------- Search --------------- */
-  $("#searchButton").on("click", function(event){
+  $("#searchButton").on("click", function (event) {
+    console.log("searchButton.on('click')");
     event.preventDefault();
     cocktailName = $("#drinkInput").val();
-    console.log(cocktailName)
-    console.log(queryURLs.search.cocktailByNameF(cocktailName));
-
-    runAjax("drinkSearch", queryURLs.search.cocktailByNameF(cocktailName), uploadSearch);
+    runAjax(
+      "drinkSearch",
+      queryURLs.search.cocktailByNameF(cocktailName),
+      uploadSearch
+    );
   });
-  
-  // upload search results
-  function uploadSearch(name, resp){
-    resp = resp.drinks[0];
-    console.log(name, resp);
-   
-    console.log("Suggested Drink: ", resp.strDrink);
-    $("#drinkNameH5").text(resp.strDrink);
-    console.log("Suggested Image: ", resp.strDrinkThumb);
-    $("#mainImage").attr("src",resp.strDrinkThumb);
-    console.log(resp.strInstructions)
-    instructionsSteps(resp.strInstructions)
-    ingredients(resp)
-  }
-  
-  function ingredients(value){
-    var ingrArray = [];
-    for (let l=1; l<16; l++){
-      let index = "strIngredient" + l;
-      // if (value.index == null){
-      //   break
-      // } else {
-        ingrArray.push(value.index);
-     // }
-      console.log(value.index);
-    }
-    console.log(ingrArray);
-  }
-  
-
- function instructionsSteps(instructions){
-   var instSteps = instructions
-   var steps = [];
-   var step = "";
-
-   for (let i=0; i<instSteps.length; i++){
-     if (instSteps[i]=="."){
-       steps.push(step);
-       step="";
-       i++;
-     } else {
-       step= step +instSteps[i]
-     }
-   }
-   console.log(steps);
-   
-   for (let j=0; j<steps.length;j++){
-     var newLi = $("<li>");
-     newLi.text(steps[j]);
-     $("#intructionsList").append(newLi)
-   }
- };
 
   /* --------------- Filter --------------- */
   // Query the Lists
@@ -130,6 +84,7 @@ $(document).ready(function () {
   runAjax("glassFilter", queryURLs.list.glasses, uploadFilter);
 
   function uploadFilter(name, res) {
+    console.log("uploadFilter()");
     res = res.drinks;
     /* console.log(name, res); */
     res.forEach(function (filter) {
@@ -144,7 +99,61 @@ $(document).ready(function () {
   }
 
   /* --------------- Drink ---------------- */
+  // upload search results
+  function uploadSearch(name, resp) {
+    console.log("uploadSearch()");
+    resp = resp.drinks[0];
+    $("#drinkNameH5").text(resp.strDrink);
+    $("#mainImage").attr("src", resp.strDrinkThumb);
+    instructionsSteps(resp.strInstructions);
+    ingredients(resp);
+  }
+
+  /* --------------- Ingredients ---------------- */
+  function ingredients(value) {
+    console.log("ingredients()");
+    console.log("value: ", value);
+    $("#ingredientsList").empty();
+    var ingrArray = [];
+    Object.entries(value).forEach(function (entry) {
+      let subKey = entry[0].substring(0, 13);
+      if (subKey === "strIngredient" && entry[1] != null) {
+        ingrArray.push(entry[1]);
+      }
+    });
+    for (let j = 0; j < ingrArray.length; j++) {
+      var newLi = $("<li>");
+      newLi.text(ingrArray[j]);
+      $("#ingredientsList").append(newLi);
+    }
+  }
+
   /* --------------- Recipe --------------- */
+  function instructionsSteps(instructions) {
+    console.log("instructionsSteps()");
+    $("#intructionsList").empty();
+    var instSteps = instructions;
+    var steps = [];
+    var step = "";
+
+    for (let i = 0; i < instSteps.length; i++) {
+      if (instSteps[i] == ".") {
+        steps.push(step);
+        step = "";
+        i++;
+      } else {
+        step = step + instSteps[i];
+      }
+    }
+    //console.log(steps);
+
+    for (let j = 0; j < steps.length; j++) {
+      var newLi = $("<li>");
+      newLi.text(steps[j]);
+      $("#intructionsList").append(newLi);
+    }
+  }
+
   /* -------------- Suggested ------------- */
   // Query Random Cocktail
   for (i = 0; i < numberOfRndSuggestions; i++) {
@@ -153,10 +162,6 @@ $(document).ready(function () {
 
   function uploadSuggested(name, res) {
     res = res.drinks[0];
-    console.log(name, res);
-    console.log("Suggested Drink: ", res.strDrink);
-    console.log("Suggested Image: ", res.strDrinkThumb);
-
     var suggestedItemDiv = $("<div>");
     var suggestedImg = $("<img>");
     var suggOverlayDiv = $("<div>");
@@ -178,6 +183,9 @@ $(document).ready(function () {
   /* ********************** Event Listeners ********************** */
 });
 
+/* function printResponse(name, res) {
+    console.log(name, res);
+  } */
 
 /*
   // Lists
