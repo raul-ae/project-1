@@ -65,6 +65,7 @@ $(document).ready(function () {
       }
     });
   }
+
   reStart();
   function reStart() {
     $(".carousel-indicators").empty();
@@ -82,6 +83,7 @@ $(document).ready(function () {
       uploadSearch
     );
   }
+
   /* --------------- Search --------------- */
   $("#searchButton").on("click", function (event) {
     event.preventDefault();
@@ -151,13 +153,17 @@ $(document).ready(function () {
     }
   }
 
-  /* --------------- Recipe --------------- */
+  /* --------------- Preparation --------------- */
+
+  // Another Giphy API Key: Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7
+  var giphyAPIKey = "kYlC1mU6XZtCjjMbaFOQr4Y52hj0VQYx";
 
   function makegiphyURL(value, Instruction) {
     var giphyURL =
       "https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" +
       value +
-      "&api_key=Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7";
+      "&api_key=" +
+      giphyAPIKey;
     // Carousel
     runAjax("carousel-inner", giphyURL, getGiphies, Instruction);
   }
