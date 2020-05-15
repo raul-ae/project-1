@@ -50,6 +50,7 @@ $(document).ready(function () {
     },
   };
   var numberOfRndSuggestions = 3;
+  var cont = 0;
 
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
@@ -64,18 +65,30 @@ $(document).ready(function () {
       }
     });
   }
-
+reStart();
+function reStart(){
+  $(".carousel-indicators").empty();
+  $('.carousel-inner').empty();
+  cont = 0;
+  
+  console.log("searchButton.on('click')");
+  
+  cont = 0; // Reset from getGiphies
+  
+  cocktailName = localStorage.getItem("last")
+  runAjax(
+    "drinkSearch",
+    queryURLs.search.cocktailByNameF(cocktailName),
+    uploadSearch
+  );
+};
   /* --------------- Search --------------- */
   $("#searchButton").on("click", function (event) {
-    console.log("searchButton.on('click')");
     event.preventDefault();
-    cont = 0; // Reset from getGiphies
     cocktailName = $("#drinkInput").val();
-    runAjax(
-      "drinkSearch",
-      queryURLs.search.cocktailByNameF(cocktailName),
-      uploadSearch
-    );
+    localStorage.setItem("last", cocktailName)
+    location.reload();
+   
   });
 
   /* --------------- Filter --------------- */
@@ -137,8 +150,10 @@ $(document).ready(function () {
     // Carousel
     runAjax("carousel-inner", giphyURL, getGiphies, Instruction)
   }
+ 
+  
 
-  var cont = 0;
+ 
   function getGiphies(name, resp, instruc) {
     console.log('getGiphies()');
     console.log('name: ', name);
@@ -146,34 +161,33 @@ $(document).ready(function () {
     console.log('url: ', resp.data[0].images.fixed_height.url);
     console.log('instruc: ', instruc);
     // Carousel
-          var newLi = $("<li>");
-          var carouselItemDiv = $('<div>');
-          var carouselItemImg = $('<img>');
+    var newLi = $("<li>");
+    var carouselItemDiv = $('<div>');      
+    var carouselItemImg = $('<img>');      
     var carouselCaptionDiv = $('<div>');
     var instructionH5 = $('<h5>');
     
-          newLi.attr('data-target', '#carouselCaptions');
+    newLi.attr('data-target', '#carouselCaptions');
     newLi.attr('data-slide-to', `${cont}`);
     if (cont === 0) {
-carouselItemDiv.attr('class', 'carousel-item active');
+      carouselItemDiv.attr('class', 'carousel-item active');
     } else {
-carouselItemDiv.attr('class', 'carousel-item');
+      carouselItemDiv.attr('class', 'carousel-item');
     }
           
-          carouselItemImg.attr('class', 'd-block w-100');
-          carouselItemImg.attr('alt', 'Carousel instructions image');
-          carouselItemImg.attr('src', resp.data[0].images.fixed_height.url);
-          carouselItemImg.attr('SameSite',"strict");
-          carouselCaptionDiv.attr('class', 'carousel-caption d-none d-md-block');
+    carouselItemImg.attr('class', 'd-block w-100');
+    carouselItemImg.attr('alt', 'Carousel instructions image');
+    carouselItemImg.attr('src', resp.data[0].images.fixed_height.url);
+    carouselItemImg.attr('SameSite',"strict");
+    carouselCaptionDiv.attr('class', 'carousel-caption d-none d-md-block');      
     instructionH5.text(instruc);
     
-          $(".carousel-indicators").append(newLi);
+    $(".carousel-indicators").append(newLi);
 
-          carouselCaptionDiv.append(instructionH5);
-          carouselItemDiv.append(carouselItemImg);
-          carouselItemDiv.append(carouselCaptionDiv);
+    carouselCaptionDiv.append(instructionH5);
+    carouselItemDiv.append(carouselItemImg);
+    carouselItemDiv.append(carouselCaptionDiv);
     $('.carousel-inner').append(carouselItemDiv);
-    // $('.Ingredients').append(carouselItemDiv);
     cont++;
   }
 
@@ -195,10 +209,10 @@ carouselItemDiv.attr('class', 'carousel-item');
         step = step + instSteps[i];
       }
     }
-    //console.log(steps);
+    console.log(steps);
 
     // getting action verbs from the intructions
-    var verbs = ["pour", "mix", "shake", "rub", "sprinkle", "serve", "garnish", "blender", "muddle"]
+    var verbs = ["fill","place","saturate","add","dash","pour", "mix", "shake", "rub", "sprinkle", "serve", "garnish", "blender", "muddle"]
     var verbInstr = []
     for (let j = 0; j < steps.length; j++) {
       for (let i = 0; i < verbs.length; i++) {
