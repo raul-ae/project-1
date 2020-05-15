@@ -1,0 +1,67 @@
+.wdt-btn{
+    width: 100px;
+  }
+
+
+.filter-margin{
+   margin-top: 15px;
+}
+.img-hgt{
+    height: 250px;
+}
+.slider .indicators .indicator-item.active{background-color:#827717}
+
+.input-field .prefix.active{color:#827717}
+
+.ilike-lime-container {
+    @extend .lime, .lighten-4;
+  }
+
+  
+.ilike-lime-container {
+    @extend .lime-text, .text-lighten-4;
+  }
+
+.active{
+    color:#827717;
+  }
+
+label.active {
+    color: #827717 !important;
+  }
+
+input:focus {
+    border-bottom: 1px solid #827717 !important;
+    box-shadow: 0 1px 0 0 #827717 !important;
+  }
+
+ul.dropdown-content.select-dropdown li span {
+    color: #827717 !important; 
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating){
+    color:#827717;
+}
+
+.borderdown{
+    border-bottom: 1px solid lightgray;
+}
+
+.borderRecipe{
+    border: 1px solid lightgray;
+}
+
+.drinkImg{
+    width: 520px;
+    /*height: 250px;*/
+    text-align: right;
+}
+
+.nav-hgt{
+    height:130px;
+}
+
+.drinktxtcol{
+    color:white;
+    text-align: center;
+}

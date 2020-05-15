@@ -53,14 +53,14 @@ $(document).ready(function () {
 
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
-  function runAjax(name, url, thenFunction) {
+  function runAjax(name, url, thenFunction, instruc) {
     console.log("runAjax() - " + name);
     $.ajax({
       url: url,
       method: "GET",
     }).then(function (response) {
       if (thenFunction) {
-        thenFunction(name, response);
+        thenFunction(name, response, instruc);
       }
     });
   }
@@ -69,6 +69,7 @@ $(document).ready(function () {
   $("#searchButton").on("click", function (event) {
     console.log("searchButton.on('click')");
     event.preventDefault();
+    cont = 0; // Reset from getGiphies
     cocktailName = $("#drinkInput").val();
     runAjax(
       "drinkSearch",
@@ -129,7 +130,56 @@ $(document).ready(function () {
   }
 
   /* --------------- Recipe --------------- */
-  function instructionsSteps(instructions) {
+
+
+  function makegiphyURL(value, Instruction) {
+    var giphyURL = "https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" + value + "&api_key=Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7";
+    // Carousel
+    runAjax("carousel-inner", giphyURL, getGiphies, Instruction)
+  }
+
+  var cont = 0;
+  function getGiphies(name, resp, instruc) {
+    console.log('getGiphies()');
+    console.log('name: ', name);
+    console.log('resp: ', resp);
+    console.log('url: ', resp.data[0].images.fixed_height.url);
+    console.log('instruc: ', instruc);
+    // Carousel
+          var newLi = $("<li>");
+          var carouselItemDiv = $('<div>');
+          var carouselItemImg = $('<img>');
+    var carouselCaptionDiv = $('<div>');
+    var instructionH5 = $('<h5>');
+    
+          newLi.attr('data-target', '#carouselCaptions');
+    newLi.attr('data-slide-to', `${cont}`);
+    if (cont === 0) {
+carouselItemDiv.attr('class', 'carousel-item active');
+    } else {
+carouselItemDiv.attr('class', 'carousel-item');
+    }
+          
+          carouselItemImg.attr('class', 'd-block w-100');
+          carouselItemImg.attr('alt', 'Carousel instructions image');
+          carouselItemImg.attr('src', resp.data[0].images.fixed_height.url);
+          carouselItemImg.attr('SameSite',"strict");
+          carouselCaptionDiv.attr('class', 'carousel-caption d-none d-md-block');
+    instructionH5.text(instruc);
+    
+          $(".carousel-indicators").append(newLi);
+
+          carouselCaptionDiv.append(instructionH5);
+          carouselItemDiv.append(carouselItemImg);
+          carouselItemDiv.append(carouselCaptionDiv);
+    $('.carousel-inner').append(carouselItemDiv);
+    // $('.Ingredients').append(carouselItemDiv);
+    cont++;
+  }
+
+
+  function instructionsSteps(instructions, giphy) {
+
     console.log("instructionsSteps()");
     $("#intructionsList").empty();
     var instSteps = instructions;
@@ -137,7 +187,7 @@ $(document).ready(function () {
     var step = "";
 
     for (let i = 0; i < instSteps.length; i++) {
-      if (instSteps[i] == ".") {
+      if (instSteps[i] == "." && instSteps[i - 1] != "z" && instSteps[i - 2] != "o") {
         steps.push(step);
         step = "";
         i++;
@@ -147,11 +197,25 @@ $(document).ready(function () {
     }
     //console.log(steps);
 
+    // getting action verbs from the intructions
+    var verbs = ["pour", "mix", "shake", "rub", "sprinkle", "serve", "garnish", "blender", "muddle"]
+    var verbInstr = []
     for (let j = 0; j < steps.length; j++) {
-      var newLi = $("<li>");
-      newLi.text(steps[j]);
-      $("#intructionsList").append(newLi);
+      for (let i = 0; i < verbs.length; i++) {
+        var temp = steps[j].toLowerCase();
+        if (temp.search(verbs[i]) >= 0) {
+          verbInstr.push(verbs[i]);
+          makegiphyURL(verbs[i], steps[j]);
+
+          
+        }
+      }
+      console.log("intruction " + i + " verbs: " + verbInstr)
     }
+
+
+
+
   }
 
   /* -------------- Suggested ------------- */
@@ -199,7 +263,7 @@ $(document).ready(function () {
     printResponse
   );
 
-  
+
   // Filters
   runAjax("Filter - Category", queryURLs.filter.category, printResponse);
   runAjax("Filter - Glass", queryURLs.filter.glass, printResponse);
