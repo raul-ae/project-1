@@ -1,6 +1,7 @@
 $(document).ready(function(){
-    $('.slider').slider();
-  });
+  $('.slider').slider();
+});
+
 
   $(document).ready(function(){
     $('.sidenav').sidenav();
@@ -18,3 +19,4 @@ $(document).ready(function(){
   $( document ).ready(function() {
     $(".dropdown-content.select-dropdown > li span").css("color", "red");
   });
+
