@@ -43,6 +43,25 @@ ul.dropdown-content.select-dropdown li span {
     color:#827717;
 }
 
+.borderdown{
+    border-bottom: 1px solid lightgray;
+}
+
+.borderRecipe{
+    border: 1px solid lightgray;
+}
+
+.drinkImg{
+    width: 520px;
+    /*height: 250px;*/
+    text-align: right;
+}
+
 .nav-hgt{
-    height: 125px;
+    height:130px;
+}
+
+.drinktxtcol{
+    color:white;
+    text-align: center;
 }
