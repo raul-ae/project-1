@@ -84,12 +84,24 @@ function reStart(){
 };
   /* --------------- Search --------------- */
   $("#searchButton").on("click", function (event) {
-    event.preventDefault();
+     event.preventDefault();
     cocktailName = $("#drinkInput").val();
     localStorage.setItem("last", cocktailName)
     location.reload();
    
   });
+
+  // Suggested Drink selection
+
+  $(".card-columns.randomSuggest").on("click", function(event){
+    event.preventDefault();
+    cocktailName = $(this).attr("value");
+    console.log(cocktailName)
+    localStorage.setItem("last", cocktailName)
+   // location.reload();
+});
+
+
 
   /* --------------- Filter --------------- */
   // Query the Lists
@@ -246,11 +258,16 @@ function reStart(){
     var suggOverlayH5 = $("<h5>");
 
     suggestedItemDiv.attr("class", "card bg-dark text-white");
+    suggestedItemDiv.attr("value", res.strDrink);
     suggestedImg.attr("src", res.strDrinkThumb);
     suggestedImg.attr("class", "card-img");
     suggestedImg.attr("alt", "Suggested image");
+    suggestedImg.attr("value", res.strDrink);
     suggOverlayDiv.attr("class", "card-img-overlay");
+    suggOverlayDiv.attr("value", res.strDrink);
     suggOverlayH5.attr("class", "card-title");
+    suggOverlayH5.attr("value", res.strDrink);
+    
     suggOverlayH5.text(res.strDrink);
     suggestedItemDiv.append(suggestedImg);
     suggOverlayDiv.append(suggOverlayH5);
