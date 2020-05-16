@@ -260,6 +260,53 @@ $(document).ready(function () {
   }
 
   /* -------------- Suggested ------------- */
+  // Query Random Cocktail
+  for (i = 0; i < numberOfRndSuggestions; i++) {
+    runAjax("randomSuggest", queryURLs.lookup.randomCocktail, uploadSuggested);
+  }
+
+  function uploadSuggested(name, res) {
+    res = res.drinks[0];
+
+    console.log("res.strDrink: ", res.strDrink);
+    console.log("res.strDrinkThumb :", res.strDrinkThumb);
+
+    var colDiv = $("<div>");
+    var cardDiv = $("<div>");
+    var cardImgDiv = $("<div>");
+    var imgTag = $("<img>");
+    var spanTag = $("<span>");
+    var actionDiv = $("<div>");
+    var aTag = $("<a>");
+
+    colDiv.attr("class", "col s12 m4 l4");
+    cardDiv.attr("class", "card");
+    cardImgDiv.attr("class", "card-image");
+    imgTag.attr("src", res.strDrinkThumb);
+    imgTag.attr("class", "img-hgt");
+    spanTag.attr("class", "card-title lime darken-4");
+    spanTag.text(res.strDrink);
+    actionDiv.attr("class", "card-action");
+    aTag.attr("href", "#");
+    aTag.text("Go to the drink!");
+
+    cardImgDiv.append(imgTag);
+    cardImgDiv.append(spanTag);
+    cardDiv.append(cardImgDiv);
+    actionDiv.append(aTag);
+    cardDiv.append(actionDiv);
+    colDiv.append(cardDiv);
+    $(`.${name}`).append(colDiv);
+  }
+
+  // Suggested Drink selection
+  $(".card-columns.randomSuggest").on("click", function (event) {
+    event.preventDefault();
+    cocktailName = event.target.getAttribute("value");
+    console.log(cocktailName);
+    localStorage.setItem("last", cocktailName);
+    location.reload();
+  });
 
   /* ********************** Event Listeners ********************** */
   // reStart();    <<<<<----------------******
