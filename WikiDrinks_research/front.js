@@ -6,10 +6,6 @@ $(document).ready(function () {
   // Home - Intro Slider
   $(".slider").slider();
 
-  //    <<< Dónde? >>>
-  $(".sidenav").sidenav();
-  $(".dropdown-trigger").dropdown();
-  $(".dropdown-content.select-dropdown > li span").css("color", "red");
 
   // Initialize Instructions Carousel
   /* var instance = M.Carousel.getInstance(elem);
@@ -63,7 +59,7 @@ $(document).ready(function () {
     },
 
     image: {
-      ingredient: `https://www.thecocktaildb.com/images/ingredients/${ingredientName}.png (700x700 pixels)`,
+      ingredientF: (ingredientName) => `https://www.thecocktaildb.com/images/ingredients/${ingredientName}-Medium.png`
     },
   };
   var numberOfRndSuggestions = 3;
@@ -102,17 +98,26 @@ $(document).ready(function () {
     cont2 = 0;
 
     // Empty the carousel
-    $(".carousel").empty();
+    //$(".borderRecipe").empty();
     /* if (carouselInstance) {
           carouselInstance.destroy();
         } */
+            
+    // Empty the ingredients carousel
+    $('#ingredientsContent').empty();
+    
+    // Empty the instructions
+    $("#preparationContent").empty();
 
-    localStorage.setItem("last", drink);
+    //localStorage.setItem("last", drink);
     //location.reload();
     $(".introSlider").hide();
     $(".drinkIngredSection").show();
+    $("#carouselBody").show();
     $(".preparationSection").show();
     $(".articlesSection").show();
+    $('#ingredientsContent').show();
+
     runAjax(
       "drinkSearch",
       queryURLs.search.cocktailByNameF(drink),
@@ -121,20 +126,56 @@ $(document).ready(function () {
   }
 
   $("#searchButton").on("click", function (event) {
+    //$("#drinkInpput").on("submit", function (event) {
     event.preventDefault();
+    
     cocktailName = $("#drinkInput").val();
     searchDrink(cocktailName);
+    
   });
 
   /* --------------- Filter --------------- */
+  $(document).ready(function (){
+    $("select.categoryFilter").change(function(){
+      var selectCat = $(this).children("option:selected").val();
 
+      runAjax(
+        "drinkSearch",
+        queryURLs.filter.categoryF(selectCat),getDrinkName
+      );
+      $(this).formSelect();
+      $(this).children("option[value=main]").attr("selected","");
+     // $(this).material_select();
+    });
+    $("select.ingredientFilter").change(function(){
+      var selectIng = $(this).children("option:selected").val();
+      runAjax(
+        "drinkSearch",
+        queryURLs.filter.ingredientF(selectIng),getDrinkName
+      );
+    });
+    $("select.glassFilter").change(function(){
+      var selectGlass = $(this).children("option:selected").val();
+      runAjax(
+        "drinkSearch",
+        queryURLs.filter.glassF(selectGlass),getDrinkName
+      );
+    });
+  
+  });
+
+    function getDrinkName (name, resp){
+      cocktailName = resp.drinks[(Math.floor(Math.random() * 10))].strDrink;
+      console.log("filter "+ cocktailName);
+      searchDrink(cocktailName);
+    };
   /* --------------- Drink ---------------- */
   // upload search results
   function uploadSearch(name, resp) {
     console.log("uploadSearch()");
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
-    $("#mainImage").attr("src", resp.strDrinkThumb);
+    $("#mainImage").attr("style", "background-image: url(" + resp.strDrinkThumb + ")");
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
   }
@@ -143,6 +184,9 @@ $(document).ready(function () {
   function ingredients(resp) {
     console.log("ingredients()");
     $("#ingredientsList").empty();
+    
+
+    // Get the ingredients list
     var ingrArray = [];
     Object.entries(resp).forEach(function (entry) {
       let subKey = entry[0].substring(0, 13);
@@ -150,18 +194,45 @@ $(document).ready(function () {
         ingrArray.push(entry[1]);
       }
     });
+
     for (let j = 0; j < ingrArray.length; j++) {
-      var newLi = $("<li>");
-      newLi.text(ingrArray[j]);
-      $("#ingredientsList").append(newLi);
+      // Display ingredients list
+      var ingredText = $("<span>");
+      ingredText.attr('class', 'ingredSpan');
+      ingredText.text(ingrArray[j]);
+      $("#ingredientsList").append(ingredText);
+
+      // Area for ingredients image and text
+      var ingredDiv = $('<div>');
+      //ingredDiv.attr('class', 'item');
+
+      // Display ingredients images
+      var ingredient = ingrArray[j].replace(" ", "%20");
+      console.log('ingredient: ', ingredient);
+      var imageUrl = "https://www.thecocktaildb.com/images/ingredients/" + ingredient + "-Small.png";
+      console.log('imageUrl: ', imageUrl);
+      var ingredImg = $('<img>');
+      //ingredImg.attr('class', 'item');
+      ingredImg.attr('src', imageUrl);
+      ingredDiv.append(ingredImg);
+      ingredDiv.append(ingredText);
+      $('#ingredientsContent').append(ingredDiv);
     }
+
+  }
+
+  function getIngredientImage(name, resp) {
+    console.log('getIngredientImage()');
+    console.log('********** RESP **********');
+    console.log('name: ', name);
+    console.log('resp: ', resp);
   }
 
   /* --------------- Preparation --------------- */
   // Giphy API Key: Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7
   // Another Giphy API Key: kYlC1mU6XZtCjjMbaFOQr4Y52hj0VQYx
 
-  var giphyAPIKey = "kYlC1mU6XZtCjjMbaFOQr4Y52hj0VQYx";
+  var giphyAPIKey = "Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7";
   var carouselInstance;
   function makegiphyURL(value, Instruction, stepsLength) {
     var giphyURL =
@@ -181,25 +252,30 @@ $(document).ready(function () {
     console.log("instruc: ", instruc); */
     // Carousel
     var carouselItemDiv = $("<div>");
-    var instructionH6 = $("<h6>");
+    var gifItemDiv=$("<div>");
+    var itemSpan=$("<div>")
+
+    carouselItemDiv.attr("class", "col s12 m6 l6 pdnitem");
+    gifItemDiv.attr("class", "col s12 m6 l6 pdnitem");
+    
     var carouselItemImg = $("<img>");
+    carouselItemImg.attr("src",resp.data[(Math.floor(Math.random() * 10))].images.fixed_height.url);
+    carouselItemImg.attr("class", "item");  
 
-    carouselItemDiv.attr("class", "carousel-item gray-text");
-    carouselItemDiv.attr("href", "#");
-    instructionH6.text(instruc);
-    // carouselItemImg.attr("alt", "Carousel instructions image");
-    carouselItemImg.attr("src", resp.data[0].images.fixed_height.url);
-    carouselItemImg.attr("SameSite", "strict");
-
-    carouselItemDiv.append(instructionH6);
+    itemSpan.text(instruc);
+    
     carouselItemDiv.append(carouselItemImg);
-    $(".carousel").append(carouselItemDiv);
+
+    carouselItemDiv.append(itemSpan);
+
+    $("#preparationContent").append(carouselItemDiv);
+    //$("#preparationContent").append(gifItemDiv);
 
     console.log("instruc: ", instruc);
     console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
     if (cont2 == stepsLength - 1) {
       // Initialize Instructions Carousel
-      $(".carousel").carousel();
+      $("#preparationContent").carousel();
       // carouselInstance = M.Carousel.getInstance(elem);
     }
     cont2++;
@@ -262,25 +338,37 @@ $(document).ready(function () {
       "cream",
       "served",
     ];
-    var verbInstr = [];
+    // var verbInstr = [];
     var cont1 = 0;
     for (let j = 0; j < steps.length; j++) {
+      var temp = steps[j].toLowerCase();
+      var instruction = j + 1 + '. ' + steps[j];
       for (let i = 0; i < verbs.length; i++) {
-        var temp = steps[j].toLowerCase();
+        
         if (temp.search(verbs[i]) >= 0) {
-          verbInstr.push(verbs[i]);
-
-          if (cont1 < steps.length) {
-            console.log("cont1: ", cont1, " steps.length: ", steps.length);
-            cont1++;
-            makegiphyURL(verbs[i], steps[j], steps.length);
-          }
+            makegiphyURL(verbs[i], instruction, steps.length);
+            break;
         }
       }
     }
     console.log("steps: ", steps);
   }
 
+
+  /* -------------- Articles ------------- */
+  // NYT API Key: "3482b030-d24a-4b51-98c7-bcd752bbf0bb"
+  var queryNYTUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${Selection}&api-key=yourkey`;
+  
+
+
+  function getArticles() {
+    
+  }
+  
+
+  
+
+  
   /* -------------- Suggested ------------- */
   // Query Random Cocktail
   for (i = 0; i < numberOfRndSuggestions; i++) {
@@ -325,6 +413,7 @@ $(document).ready(function () {
   // Suggested Drink selection
   $(".randomSuggest").on("click", function (event) {
     event.preventDefault();
+    $(window).scrollTop(0);
     /* console.log("event: ", event);
     console.log("event.target: ", event.target);
     console.log("$(this): ", $(this)); */
@@ -338,8 +427,41 @@ $(document).ready(function () {
   });
 
   /* ********************** Event Listeners ********************** */
-  // reStart();    <<<<<----------------******
+
   $(".drinkIngredSection").hide();
+  $("#carouselBody").hide();
   $(".preparationSection").hide();
   $(".articlesSection").hide();
+  $('#ingredientsContent').hide();
+
+/*Ingredients carousel*/
+  const gap = 16;
+
+  const carousel = document.getElementById("drinksCar"),
+    content = document.getElementById("ingredientsContent"),
+    next = document.getElementById("next"),
+    prev = document.getElementById("prev");
+
+  next.addEventListener("click", e => {
+    carousel.scrollBy(width + gap, 0);
+    if (carousel.scrollWidth !== 0) {
+      prev.style.display = "flex";
+    }
+    if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "none";
+    }
+  });
+  prev.addEventListener("click", e => {
+    carousel.scrollBy(-(width + gap), 0);
+    if (carousel.scrollLeft - width - gap <= 0) {
+      prev.style.display = "none";
+    }
+    if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "flex";
+    }
+  });
+
+  let width = carousel.offsetWidth;
+  window.addEventListener("resize", e => (width = carousel.offsetWidth));
+
 });
