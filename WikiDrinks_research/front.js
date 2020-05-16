@@ -99,7 +99,7 @@ $(document).ready(function () {
   /* --------------- Search --------------- */
   $("#searchButton").on("click", function (event) {
     event.preventDefault();
-
+    cont = 0;
     // Empty the carousel
     if (carouselInstance) {
       carouselInstance.destroy();
@@ -166,10 +166,10 @@ $(document).ready(function () {
 
   function getGiphies(name, resp, instruc, stepsLength) {
     console.log("getGiphies()");
-    console.log("name: ", name);
+    /* console.log("name: ", name);
     console.log("resp: ", resp);
     console.log("url: ", resp.data[0].images.fixed_height.url);
-    console.log("instruc: ", instruc);
+    console.log("instruc: ", instruc); */
     // Carousel
     var carouselItemDiv = $("<div>");
     var instructionH6 = $("<h6>");
@@ -186,7 +186,7 @@ $(document).ready(function () {
     carouselItemDiv.append(carouselItemImg);
     $(".carousel").append(carouselItemDiv);
     cont++;
-
+    console.log("instruc: ", instruc);
     if (cont === stepsLength) {
       // Initialize Instructions Carousel
       $(".carousel").carousel();
@@ -196,7 +196,7 @@ $(document).ready(function () {
 
   function instructionsSteps(instructions, giphy) {
     console.log("instructionsSteps()");
-    $("#carousel").empty();
+    $(".carousel").empty();
     var instSteps = instructions;
     var steps = [];
     var step = "";
@@ -214,7 +214,7 @@ $(document).ready(function () {
         step = step + instSteps[i];
       }
     }
-    console.log("Steps: ", steps);
+    /* console.log("Steps: ", steps); */
 
     // getting action verbs from the intructions
     var verbs = [
@@ -244,6 +244,7 @@ $(document).ready(function () {
         }
       }
     }
+    console.log("steps: ", steps);
   }
 
   /* -------------- Suggested ------------- */
