@@ -97,17 +97,17 @@ $(document).ready(function () {
   }
 
   /* --------------- Search --------------- */
-  $("#searchButton").on("click", function (event) {
-    event.preventDefault();
+
+  function searchDrink(drink) {
     cont2 = 0;
+
     // Empty the carousel
     $(".carousel").empty();
     /* if (carouselInstance) {
-      carouselInstance.destroy();
-    } */
+          carouselInstance.destroy();
+        } */
 
-    cocktailName = $("#drinkInput").val();
-    localStorage.setItem("last", cocktailName);
+    localStorage.setItem("last", drink);
     //location.reload();
     $(".introSlider").hide();
     $(".drinkIngredSection").show();
@@ -115,9 +115,15 @@ $(document).ready(function () {
     $(".articlesSection").show();
     runAjax(
       "drinkSearch",
-      queryURLs.search.cocktailByNameF(cocktailName),
+      queryURLs.search.cocktailByNameF(drink),
       uploadSearch
     );
+  }
+
+  $("#searchButton").on("click", function (event) {
+    event.preventDefault();
+    cocktailName = $("#drinkInput").val();
+    searchDrink(cocktailName);
   });
 
   /* --------------- Filter --------------- */
@@ -239,6 +245,22 @@ $(document).ready(function () {
       "combine",
       "float",
       "look",
+      "simmer",
+      "age",
+      "strain",
+      "dissolve",
+      "stir",
+      "dry",
+      "boil",
+      "eat",
+      "squeeze",
+      "substituted",
+      "use",
+      "blend",
+      "drink",
+      "build",
+      "cream",
+      "served",
     ];
     var verbInstr = [];
     var cont1 = 0;
@@ -288,6 +310,7 @@ $(document).ready(function () {
     spanTag.text(res.strDrink);
     actionDiv.attr("class", "card-action");
     aTag.attr("href", "#");
+    aTag.attr("drink", res.strDrink);
     aTag.text("Go to the drink!");
 
     cardImgDiv.append(imgTag);
@@ -300,12 +323,18 @@ $(document).ready(function () {
   }
 
   // Suggested Drink selection
-  $(".card-columns.randomSuggest").on("click", function (event) {
+  $(".randomSuggest").on("click", function (event) {
     event.preventDefault();
-    cocktailName = event.target.getAttribute("value");
-    console.log(cocktailName);
-    localStorage.setItem("last", cocktailName);
-    location.reload();
+    /* console.log("event: ", event);
+    console.log("event.target: ", event.target);
+    console.log("$(this): ", $(this)); */
+
+    cocktailName = event.target.getAttribute("drink");
+    if (cocktailName != undefined) {
+      console.log("cocktailName: ", cocktailName);
+      localStorage.setItem("last", cocktailName);
+      searchDrink(cocktailName);
+    }
   });
 
   /* ********************** Event Listeners ********************** */
