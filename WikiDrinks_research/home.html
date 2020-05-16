@@ -1,200 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WikiDrink</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WikiDrink</title>
 
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!--<link rel="stylesheet" href="./style.css">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--<link rel="stylesheet" href="./style.css">
     Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="./frontStyle.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./frontStyle.css">
 </head>
+
 <body>
-    <header>
-      <div class="navbar-fixed nav-hgt">
-        <nav>
-            <div class="nav-wrapper lime darken-2">
-            <a href="./home.html" class="brand-logo center"><img src="./logo.png"></img></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
 
-                <li><a href="./drink.html">Suggested Drink</a></li>
-
-                <li><a href="#">News</a></li>
-            </ul>
-            </div>
-        </nav>
-      </div>
-    </header>
-    <div class="container">
-        <!-- Page Content goes here -->
-
-        <!-- Search and filter section -->
-        <div class="row">
-          <form class="lime darken-4">
-              <div class="input-field col s12 m4 l4">
-                <i class="material-icons prefix">search</i>
-                <input id="icon_prefix" type="text" class="validate">
-                <label for="icon_prefix">Search for a drink</label>
-              </div>
-
-              <div class="col s12 m8 l8" >
-                <div class="input-field col s3 m3 l3">
-                  <i class="material-icons prefix">filter_list</i>
-                </div>
-              
-                <div class="input-field col s3 m3 l3 filter-margin">
-                    <select>
-                      <option value="" selected>Category</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="3">Option 3</option>
-                    </select>
-                </div> 
-                <div class="col s3 m3 l3 filter-margin">
-                  <select>
-                    <option value="" selected>Glass</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                  </select>
-                </div>
-                <div class="col s3 m3 l3 filter-margin">
-                  <select>
-                    <option value="" selected>Alcohol</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                  </select>
-                </div>
-              </div>
-          </form>
+  <header>
+    <div class="navbar-fixed nav-hgt">
+      <nav>
+        <div class="nav-wrapper lime darken-2">
+          <a href="./home.html" class="brand-logo center"><img src="./logo.png"></img></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#suggestedDrk">Suggested Drink</a></li>
+            <li><a href="#articlesSec">News</a></li>
+          </ul>
         </div>
-
-    
-
-        <div class="row" style="margin-bottom: 50px">
-            <div class="slider" >
-                <ul class="slides">
-                  <li class="lime darken-3">
-                    <img src="https://www.laguiago.com/wp-content/uploads/2019/09/alicantec.jpeg"> <!-- random image -->
-                    <div class="caption center-align">
-                      <h3>This is our big Tagline!</h3>
-                      <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                  </li>
-                  <li>
-                    <img src="https://media.laguiago.com/wp-content/uploads/2019/09/cocktails-web.jpg"> <!-- random image -->
-                    <div class="caption left-align">
-                      <h3>Left Aligned Caption</h3>
-                      <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                  </li>
-                  <li>
-                    <img src="https://okdiario.com/img/2019/08/20/receta-de-cocktail-margarita-1-655x368.jpg"> <!-- random image -->
-                    <div class="caption right-align">
-                      <h3>Right Aligned Caption</h3>
-                      <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                  </li>
-                  <li>
-                    <img src="https://media-cdn.tripadvisor.com/media/photo-s/0d/e0/e1/ed/los-mejores-cocteles.jpg"> <!-- random image -->
-                    <div class="caption center-align">
-                      <h3>This is our big Tagline!</h3>
-                      <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-        </div>
-        <div class="row">
-          <h5>
-            Suggested Drinks:
-          </h5>
-            <div class="col s12 m4 l4">
-                <div class="card">
-                  <div class="card-image">
-                    <img src="https://www.cocinavital.mx/wp-content/uploads/2018/02/bull_con_cerveza-e1548799310667.jpg" class="img-hgt">
-                    <span class="card-title lime darken-4">Bull</span>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Go to the drink!</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m4 l4">
-                <div class="card">
-                  <div class="card-image">
-                    <img src="https://www.thespruceeats.com/thmb/S9QS-a0peub0W6cMtdSH7oBoVnI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/tequila-sunrise-recipe-760754-19_preview-5b02f856119fa80037651942.jpeg" class="img-hgt">
-                    <span class="card-title lime darken-4">Tequila Sunrise</span>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Go to the drink!</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m4 l4">
-                <div class="card">
-                  <div class="card-image">
-                    <img src="https://www.goya.com/media/3161/kicking-bloody-mary.jpg" class="img-hgt">
-                    <span class="card-title lime darken-4">Bloody Mary</span>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Go to the drink!</a>
-                  </div>
-                </div>
-              </div>
-        </div>
+      </nav>
     </div>
-    
-    <footer class="page-footer lime darken-2">
-        <div class="container">
-          <div class="row">
-            <div class="col l6 s12">
-              <h5 class="white-text">WikiDrinks.com</h5>
-              <p class="grey-text text-lighten-4">You can figure out how to prepare your favorite drink in this site.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-              <h5 class="white-text">Most popular drinks</h5>
-              <ul>
-                <li><a class="grey-text text-lighten-4" href="#!">Mojito</a></li>
-                <li><a class="grey-text text-lighten-4" href="#!">Paloma</a></li>
-              </ul>
-            </div>
-          </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Search and filter section -->
+    <div class="row">
+      <form class="lime darken-4 inputForm">
+        <div class="input-field col s12 m4 l4">
+          <i class="material-icons prefix" id="searchButton">search</i>
+          <input id="drinkInput" type="text" class="validate">
+          <label for="drinkInput">Search for a drink</label>
         </div>
 
-        <div class="footer-copyright">
-          <div class="container">
-          © 2020 Copyright WikiDrinks
+        <div class="col s12 m8 l8 filter-margin randomBy">
+          <div class="input-field col s3 m3 l3 ">
+            Random drink by:<!--<i class="material-icons prefix">filter_list</i>-->
+          </div>
+
+          <div class="col s3 m3 l3">
+            <select class="categoryFilter" id="categoryFilter">
+              <option value="main">Category</option>
+              <option value="Ordinary Drink">Ordinary Drink</option>
+              <option value="Cocktail">Cocktail</option>
+              <option value="Milk / Float / Shake">Milk / Float / Shake</option>
+              <option value="Other/Unknown">Other/Unknown</option>
+              <option value="Cocoa">Cocoa</option>
+              <option value="Shot">Shot</option>
+              <option value="Coffee / Tea">Coffee / Tea</option>
+              <option value="Homemade Liqueur">Homemade Liqueur</option>
+              <option value="Punch / Party Drink">Punch / Party Drink</option>
+              <option value="Beer">Beer</option>
+              <option value="Soft Drink / Soda">Soft Drink / Soda</option>
+            </select>
+          </div>
+          <div class="col s3 m3 l3">
+              <select class="ingredientFilter">
+                <option value="" selected="">Ingredient</option>
+              <option value="Light rum">Light rum</option><option value="Applejack">Applejack</option><option value="Gin">Gin</option><option value="Dark rum">Dark rum</option><option value="Sweet Vermouth">Sweet Vermouth</option><option value="Strawberry schnapps">Strawberry schnapps</option><option value="Scotch">Scotch</option><option value="Apricot brandy">Apricot brandy</option><option value="Triple sec">Triple sec</option><option value="Southern Comfort">Southern Comfort</option><option value="Orange bitters">Orange bitters</option><option value="Brandy">Brandy</option><option value="Lemon vodka">Lemon vodka</option><option value="Blended whiskey">Blended whiskey</option><option value="Dry Vermouth">Dry Vermouth</option><option value="Amaretto">Amaretto</option><option value="Tea">Tea</option><option value="Champagne">Champagne</option><option value="Coffee liqueur">Coffee liqueur</option><option value="Bourbon">Bourbon</option><option value="Tequila">Tequila</option><option value="Vodka">Vodka</option><option value="Añejo rum">Añejo rum</option><option value="Bitters">Bitters</option><option value="Sugar">Sugar</option><option value="Kahlua">Kahlua</option><option value="demerara Sugar">demerara Sugar</option><option value="Dubonnet Rouge">Dubonnet Rouge</option><option value="Lime juice">Lime juice</option><option value="Irish whiskey">Irish whiskey</option><option value="Apple brandy">Apple brandy</option><option value="Carbonated water">Carbonated water</option><option value="Cherry brandy">Cherry brandy</option><option value="Creme de Cacao">Creme de Cacao</option><option value="Grenadine">Grenadine</option><option value="Port">Port</option><option value="Coffee brandy">Coffee brandy</option><option value="Red wine">Red wine</option><option value="Rum">Rum</option><option value="Grapefruit juice">Grapefruit juice</option><option value="Ricard">Ricard</option><option value="Sherry">Sherry</option><option value="Cognac">Cognac</option><option value="Sloe gin">Sloe gin</option><option value="Apple juice">Apple juice</option><option value="Pineapple juice">Pineapple juice</option><option value="Lemon juice">Lemon juice</option><option value="Sugar syrup">Sugar syrup</option><option value="Milk">Milk</option><option value="Strawberries">Strawberries</option><option value="Chocolate syrup">Chocolate syrup</option><option value="Yoghurt">Yoghurt</option><option value="Mango">Mango</option><option value="Ginger">Ginger</option><option value="Lime">Lime</option><option value="Cantaloupe">Cantaloupe</option><option value="Berries">Berries</option><option value="Grapes">Grapes</option><option value="Kiwi">Kiwi</option><option value="Tomato juice">Tomato juice</option><option value="Cocoa powder">Cocoa powder</option><option value="Chocolate">Chocolate</option><option value="Heavy cream">Heavy cream</option><option value="Galliano">Galliano</option><option value="Peach Vodka">Peach Vodka</option><option value="Ouzo">Ouzo</option><option value="Coffee">Coffee</option><option value="Spiced rum">Spiced rum</option><option value="Water">Water</option><option value="Espresso">Espresso</option><option value="Angelica root">Angelica root</option><option value="Orange">Orange</option><option value="Cranberries">Cranberries</option><option value="Johnnie Walker">Johnnie Walker</option><option value="Apple cider">Apple cider</option><option value="Everclear">Everclear</option><option value="Cranberry juice">Cranberry juice</option><option value="Egg yolk">Egg yolk</option><option value="Egg">Egg</option><option value="Grape juice">Grape juice</option><option value="Peach nectar">Peach nectar</option><option value="Lemon">Lemon</option><option value="Firewater">Firewater</option><option value="Lemonade">Lemonade</option><option value="Lager">Lager</option><option value="Whiskey">Whiskey</option><option value="Absolut Citron">Absolut Citron</option><option value="Pisco">Pisco</option><option value="Irish cream">Irish cream</option><option value="Ale">Ale</option><option value="Chocolate liqueur">Chocolate liqueur</option><option value="Midori melon liqueur">Midori melon liqueur</option><option value="Sambuca">Sambuca</option><option value="Cider">Cider</option><option value="Sprite">Sprite</option><option value="7-Up">7-Up</option><option value="Blackberry brandy">Blackberry brandy</option><option value="Peppermint schnapps">Peppermint schnapps</option><option value="Creme de Cassis">Creme de Cassis</option><option value="Jack Daniels">Jack Daniels</option>
+            </select>
+          </div>
+          <div class="col s3 m3 l3">
+            <select class="glassFilter">
+            <option value="" selected="">Glass Type</option>
+            <option value="Highball glass">Highball glass</option><option value="Cocktail glass">Cocktail glass</option><option value="Old-fashioned glass">Old-fashioned glass</option><option value="Collins glass">Collins glass</option><option value="Pousse cafe glass">Pousse cafe glass</option><option value="Champagne flute">Champagne flute</option><option value="Whiskey sour glass">Whiskey sour glass</option><option value="Brandy snifter">Brandy snifter</option><option value="White wine glass">White wine glass</option><option value="Nick and Nora Glass">Nick and Nora Glass</option><option value="Hurricane glass">Hurricane glass</option><option value="Coffee mug">Coffee mug</option><option value="Shot glass">Shot glass</option><option value="Jar">Jar</option><option value="Irish coffee cup">Irish coffee cup</option><option value="Punch bowl">Punch bowl</option><option value="Pitcher">Pitcher</option><option value="Pint glass">Pint glass</option><option value="Copper Mug">Copper Mug</option><option value="Wine Glass">Wine Glass</option><option value="Cordial glass">Cordial glass</option><option value="Beer mug">Beer mug</option><option value="Margarita/Coupette glass">Margarita/Coupette glass</option><option value="Beer pilsner">Beer pilsner</option><option value="Beer Glass">Beer Glass</option><option value="Parfait glass">Parfait glass</option><option value="Mason jar">Mason jar</option><option value="Margarita glass">Margarita glass</option><option value="Martini Glass">Martini Glass</option><option value="Balloon Glass">Balloon Glass</option><option value="Coupe Glass">Coupe Glass</option><option value=""></option>
+          </select>
           </div>
         </div>
-      </footer>           
+      </form>
+    </div> <!-- / Search and filter section -->
 
-    <!--<script type="text/javascript" src="js/materialize.min.js"></script>-->
-    <script
-    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+
+    <!-- Intro Slider -->
+    <div class="row introSlider" style="margin-bottom: 50px">
+      <div class="slider">
+        <ul class="slides">
+          <li class="lime darken-3">
+            <img src="https://www.laguiago.com/wp-content/uploads/2019/09/alicantec.jpeg"> <!-- random image -->
+            <div class="caption center-align">
+              <h3>This is our big Tagline!</h3>
+              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+          </li>
+          <li>
+            <img src="https://media.laguiago.com/wp-content/uploads/2019/09/cocktails-web.jpg"> <!-- random image -->
+            <div class="caption left-align">
+              <h3>Left Aligned Caption</h3>
+              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+          </li>
+          <li>
+            <img src="https://okdiario.com/img/2019/08/20/receta-de-cocktail-margarita-1-655x368.jpg">
+            <!-- random image -->
+            <div class="caption right-align">
+              <h3>Right Aligned Caption</h3>
+              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+          </li>
+          <li>
+            <img src="https://media-cdn.tripadvisor.com/media/photo-s/0d/e0/e1/ed/los-mejores-cocteles.jpg">
+            <!-- random image -->
+            <div class="caption center-align">
+              <h3>This is our big Tagline!</h3>
+              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div> <!-- /Intro Slider -->
+
+
+
+
+
+    <!-- Selected drink Instructions -->
+    <div class="row drinkIngredSection">
+
+      <!-- Drink -->
+      <div class="col s12 m12 l12 lime darken-4 drinktxtcol">
+        <h4 id="drinkNameH4">Drink name</h4>
+      </div> <!-- /Drink -->
+
+      <!-- Ingredients -->
+        <div class=" col s12 m4 l4 ingredientsImages"></div>
+       <!-- /Ingredients -->
+
+      <!-- Drink Image -->
+      <div class="col s12 m12 l12">
+        <div class="card">
+          <div class="card-image drinkFixedWidth" 
+          style="background-image: url(https://image.shutterstock.com/z/stock-photo-vintage-lamps-with-blurred-liquor-bar-1184574109.jpg)" 
+          id="mainImage">
+          </div>
+        </div>
+      </div> <!-- Drink Image -->
+
+    </div>
+
+    <!-- Ingredients Carousel -->
+    <div class="row" id="carouselBody">
+      <h5>Ingredients</h5>
+      <div id="wrapper">
+        <div id="drinksCar">
+          <div id="ingredientsContent">
+            
+          </div>
+        </div>
+        <button id="prev">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+          </svg>
+        </button>
+        <button id="next">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Preparation -->
+    <div class="row preparationSection" id="carouselBody">
+      <h5>Preparation</h5>
+      <div class="col s12 m12 l12 borderRecipe">
+        <div id="wrapper">
+          <div id="drinksCar">
+            <div id="preparationContent">
+              
+            </div>
+          </div>
+          <button id="prev">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+            </svg>
+          </button>
+          <button id="next">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div> <!-- /Instructions -->
+
+
+    <!-- Articles -->
+    <div class="row articlesSection" id="articlesSec">
+      <h5>
+        Some Interesting articles about this drink:
+      </h5>
+      <div class="col s12 m6 l6">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://image.shutterstock.com/z/stock-photo-vintage-lamps-with-blurred-liquor-bar-1184574109.jpg"
+              class="img-hgt">
+            <span class="card-title lime darken-4">Article Title</span>
+          </div>
+          <div class="card-content">
+            <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+          </div>
+          <div class="card-action">
+            <a href="#">Go to the Article!</a>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l6">
+        <div class="card">
+          <div class="card-image">
+            <img
+              src="https://www.ritzparis.com/sites/default/files/styles/1440x748/public/images/card_page/slideshow/ritz-paris-hotel-bar-hemingway-1_1.jpg?itok=_EVzsnE2"
+              class="img-hgt">
+            <span class="card-title lime darken-4">Article Title</span>
+          </div>
+          <div class="card-content">
+            <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+          </div>
+          <div class="card-action">
+            <a href="#">Go to the Article!</a>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /Articles -->
+
+
+    <!-- Suggested Drinks -->
+    <div class="row" id="suggestedDrk">
+      <h5>
+        Suggested Drinks:
+      </h5>
+      <div class="randomSuggest">
+      </div>
+    </div> <!-- /Suggested Drinks -->
+
+  </div>
+
+
+  <footer class="page-footer lime darken-2">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">WikiDrinks.com</h5>
+          <p class="grey-text text-lighten-4">You can figure out how to prepare your favorite drink in this site.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Most popular drinks</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-4" href="#!">Mojito</a></li>
+            <li><a class="grey-text text-lighten-4" href="#!">Paloma</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2020 Copyright WikiDrinks
+      </div>
+    </div>
+  </footer>
+
+  <!--<script type="text/javascript" src="js/materialize.min.js"></script>-->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    crossorigin="anonymous"></script>
+
+  <!-- Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    crossorigin="anonymous"></script>
+
+  <!-- Bootstrap -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"
-  ></script>
+    crossorigin="anonymous"></script>
+
+  <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="./front.js"></script>
+
+  <!-- Materialize -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- Main JS -->
+  <script src="./front.js"></script>
+  <!-- <script src="./app.js"></script> -->
+
 </body>
+
 </html>
