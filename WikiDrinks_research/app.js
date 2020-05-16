@@ -50,6 +50,7 @@ $(document).ready(function () {
     },
   };
   var numberOfRndSuggestions = 3;
+  var cont = 0;
 
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
@@ -64,18 +65,39 @@ $(document).ready(function () {
       }
     });
   }
+  reStart();
+  function reStart() {
+    $(".carousel-indicators").empty();
+    $(".carousel-inner").empty();
+    cont = 0;
 
-  /* --------------- Search --------------- */
-  $("#searchButton").on("click", function (event) {
     console.log("searchButton.on('click')");
-    event.preventDefault();
+
     cont = 0; // Reset from getGiphies
-    cocktailName = $("#drinkInput").val();
+
+    cocktailName = localStorage.getItem("last");
     runAjax(
       "drinkSearch",
       queryURLs.search.cocktailByNameF(cocktailName),
       uploadSearch
     );
+  }
+  /* --------------- Search --------------- */
+  $("#searchButton").on("click", function (event) {
+    event.preventDefault();
+    cocktailName = $("#drinkInput").val();
+    localStorage.setItem("last", cocktailName);
+    location.reload();
+  });
+
+  // Suggested Drink selection
+
+  $(".card-columns.randomSuggest").on("click", function (event) {
+    event.preventDefault();
+    cocktailName = event.target.getAttribute("value");
+    console.log(cocktailName);
+    localStorage.setItem("last", cocktailName);
+    location.reload();
   });
 
   /* --------------- Filter --------------- */
@@ -131,55 +153,53 @@ $(document).ready(function () {
 
   /* --------------- Recipe --------------- */
 
-
   function makegiphyURL(value, Instruction) {
-    var giphyURL = "https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" + value + "&api_key=Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7";
+    var giphyURL =
+      "https://cors-anywhere.herokuapp.com/https://api.giphy.com/v1/gifs/search?q=" +
+      value +
+      "&api_key=Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7";
     // Carousel
-    runAjax("carousel-inner", giphyURL, getGiphies, Instruction)
+    runAjax("carousel-inner", giphyURL, getGiphies, Instruction);
   }
 
-  var cont = 0;
   function getGiphies(name, resp, instruc) {
-    console.log('getGiphies()');
-    console.log('name: ', name);
-    console.log('resp: ', resp);
-    console.log('url: ', resp.data[0].images.fixed_height.url);
-    console.log('instruc: ', instruc);
+    console.log("getGiphies()");
+    console.log("name: ", name);
+    console.log("resp: ", resp);
+    console.log("url: ", resp.data[0].images.fixed_height.url);
+    console.log("instruc: ", instruc);
     // Carousel
-          var newLi = $("<li>");
-          var carouselItemDiv = $('<div>');
-          var carouselItemImg = $('<img>');
-    var carouselCaptionDiv = $('<div>');
-    var instructionH5 = $('<h5>');
-    
-          newLi.attr('data-target', '#carouselCaptions');
-    newLi.attr('data-slide-to', `${cont}`);
-    if (cont === 0) {
-carouselItemDiv.attr('class', 'carousel-item active');
-    } else {
-carouselItemDiv.attr('class', 'carousel-item');
-    }
-          
-          carouselItemImg.attr('class', 'd-block w-100');
-          carouselItemImg.attr('alt', 'Carousel instructions image');
-          carouselItemImg.attr('src', resp.data[0].images.fixed_height.url);
-          carouselItemImg.attr('SameSite',"strict");
-          carouselCaptionDiv.attr('class', 'carousel-caption d-none d-md-block');
-    instructionH5.text(instruc);
-    
-          $(".carousel-indicators").append(newLi);
+    var newLi = $("<li>");
+    var carouselItemDiv = $("<div>");
+    var carouselItemImg = $("<img>");
+    var carouselCaptionDiv = $("<div>");
+    var instructionH5 = $("<h5>");
 
-          carouselCaptionDiv.append(instructionH5);
-          carouselItemDiv.append(carouselItemImg);
-          carouselItemDiv.append(carouselCaptionDiv);
-    $('.carousel-inner').append(carouselItemDiv);
-    // $('.Ingredients').append(carouselItemDiv);
+    newLi.attr("data-target", "#carouselCaptions");
+    newLi.attr("data-slide-to", `${cont}`);
+    if (cont === 0) {
+      carouselItemDiv.attr("class", "carousel-item active");
+    } else {
+      carouselItemDiv.attr("class", "carousel-item");
+    }
+
+    carouselItemImg.attr("class", "d-block w-100");
+    carouselItemImg.attr("alt", "Carousel instructions image");
+    carouselItemImg.attr("src", resp.data[(Math.floor(Math.random() * 26))].images.fixed_height.url);
+    carouselItemImg.attr("SameSite", "strict");
+    carouselCaptionDiv.attr("class", "carousel-caption d-none d-md-block");
+    instructionH5.text(instruc);
+
+    $(".carousel-indicators").append(newLi);
+
+    carouselCaptionDiv.append(instructionH5);
+    carouselItemDiv.append(carouselItemImg);
+    carouselItemDiv.append(carouselCaptionDiv);
+    $(".carousel-inner").append(carouselItemDiv);
     cont++;
   }
 
-
   function instructionsSteps(instructions, giphy) {
-
     console.log("instructionsSteps()");
     $("#intructionsList").empty();
     var instSteps = instructions;
@@ -187,7 +207,11 @@ carouselItemDiv.attr('class', 'carousel-item');
     var step = "";
 
     for (let i = 0; i < instSteps.length; i++) {
-      if (instSteps[i] == "." && instSteps[i - 1] != "z" && instSteps[i - 2] != "o") {
+      if (
+        instSteps[i] == "." &&
+        instSteps[i - 1] != "z" &&
+        instSteps[i - 2] != "o"
+      ) {
         steps.push(step);
         step = "";
         i++;
@@ -195,27 +219,40 @@ carouselItemDiv.attr('class', 'carousel-item');
         step = step + instSteps[i];
       }
     }
-    //console.log(steps);
+    console.log(steps);
 
     // getting action verbs from the intructions
-    var verbs = ["pour", "mix", "shake", "rub", "sprinkle", "serve", "garnish", "blender", "muddle"]
-    var verbInstr = []
+    var verbs = [
+      "fill",
+      "place",
+      "saturate",
+      "add",
+      "dash",
+      "pour",
+      "mix",
+      "shake",
+      "rub",
+      "sprinkle",
+      "serve",
+      "garnish",
+      "blender",
+      "muddle",
+      "mash",
+      "combine",
+      "float",
+      "look"
+    ];
+    var verbInstr = [];
     for (let j = 0; j < steps.length; j++) {
       for (let i = 0; i < verbs.length; i++) {
         var temp = steps[j].toLowerCase();
         if (temp.search(verbs[i]) >= 0) {
           verbInstr.push(verbs[i]);
           makegiphyURL(verbs[i], steps[j]);
-
-          
         }
       }
-      console.log("intruction " + i + " verbs: " + verbInstr)
+      console.log("intruction " + i + " verbs: " + verbInstr);
     }
-
-
-
-
   }
 
   /* -------------- Suggested ------------- */
@@ -232,11 +269,16 @@ carouselItemDiv.attr('class', 'carousel-item');
     var suggOverlayH5 = $("<h5>");
 
     suggestedItemDiv.attr("class", "card bg-dark text-white");
+    suggestedItemDiv.attr("value", res.strDrink);
     suggestedImg.attr("src", res.strDrinkThumb);
     suggestedImg.attr("class", "card-img");
     suggestedImg.attr("alt", "Suggested image");
+    suggestedImg.attr("value", res.strDrink);
     suggOverlayDiv.attr("class", "card-img-overlay");
+    suggOverlayDiv.attr("value", res.strDrink);
     suggOverlayH5.attr("class", "card-title");
+    suggOverlayH5.attr("value", res.strDrink);
+
     suggOverlayH5.text(res.strDrink);
     suggestedItemDiv.append(suggestedImg);
     suggOverlayDiv.append(suggOverlayH5);
