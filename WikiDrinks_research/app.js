@@ -243,6 +243,10 @@ $(document).ready(function () {
       "garnish",
       "blender",
       "muddle",
+      "mash",
+      "combine",
+      "float",
+      "look",
     ];
     var verbInstr = [];
     for (let j = 0; j < steps.length; j++) {

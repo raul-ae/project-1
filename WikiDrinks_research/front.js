@@ -67,7 +67,7 @@ $(document).ready(function () {
     },
   };
   var numberOfRndSuggestions = 3;
-  var cont = 0;
+  var cont2 = 0;
 
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
@@ -99,11 +99,12 @@ $(document).ready(function () {
   /* --------------- Search --------------- */
   $("#searchButton").on("click", function (event) {
     event.preventDefault();
-    cont = 0;
+    cont2 = 0;
     // Empty the carousel
-    if (carouselInstance) {
+    $(".carousel").empty();
+    /* if (carouselInstance) {
       carouselInstance.destroy();
-    }
+    } */
 
     cocktailName = $("#drinkInput").val();
     localStorage.setItem("last", cocktailName);
@@ -151,7 +152,9 @@ $(document).ready(function () {
   }
 
   /* --------------- Preparation --------------- */
-  // Another Giphy API Key: Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7
+  // Giphy API Key: Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7
+  // Another Giphy API Key: kYlC1mU6XZtCjjMbaFOQr4Y52hj0VQYx
+
   var giphyAPIKey = "kYlC1mU6XZtCjjMbaFOQr4Y52hj0VQYx";
   var carouselInstance;
   function makegiphyURL(value, Instruction, stepsLength) {
@@ -185,18 +188,19 @@ $(document).ready(function () {
     carouselItemDiv.append(instructionH6);
     carouselItemDiv.append(carouselItemImg);
     $(".carousel").append(carouselItemDiv);
-    cont++;
+
     console.log("instruc: ", instruc);
-    if (cont === stepsLength) {
+    console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
+    if (cont2 == stepsLength - 1) {
       // Initialize Instructions Carousel
       $(".carousel").carousel();
-      carouselInstance = M.Carousel.getInstance(elem);
+      // carouselInstance = M.Carousel.getInstance(elem);
     }
+    cont2++;
   }
 
   function instructionsSteps(instructions, giphy) {
     console.log("instructionsSteps()");
-    $(".carousel").empty();
     var instSteps = instructions;
     var steps = [];
     var step = "";
@@ -214,7 +218,6 @@ $(document).ready(function () {
         step = step + instSteps[i];
       }
     }
-    /* console.log("Steps: ", steps); */
 
     // getting action verbs from the intructions
     var verbs = [
@@ -232,15 +235,24 @@ $(document).ready(function () {
       "garnish",
       "blender",
       "muddle",
+      "mash",
+      "combine",
+      "float",
+      "look",
     ];
     var verbInstr = [];
+    var cont1 = 0;
     for (let j = 0; j < steps.length; j++) {
       for (let i = 0; i < verbs.length; i++) {
         var temp = steps[j].toLowerCase();
         if (temp.search(verbs[i]) >= 0) {
           verbInstr.push(verbs[i]);
-          console.log("verb: ", verbs[i], " step: ", steps[j]);
-          makegiphyURL(verbs[i], steps[j], steps.length);
+
+          if (cont1 < steps.length) {
+            console.log("cont1: ", cont1, " steps.length: ", steps.length);
+            cont1++;
+            makegiphyURL(verbs[i], steps[j], steps.length);
+          }
         }
       }
     }
