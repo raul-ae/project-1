@@ -6,7 +6,10 @@ $(document).ready(function () {
   // Home - Intro Slider
   $(".slider").slider();
 
+<<<<<<< HEAD:WikiDrinks_research/front.js
 
+=======
+>>>>>>> master:front.js
   // Initialize Instructions Carousel
   /* var instance = M.Carousel.getInstance(elem);
   $(".carousel").carousel(); */
@@ -59,7 +62,12 @@ $(document).ready(function () {
     },
 
     image: {
+<<<<<<< HEAD:WikiDrinks_research/front.js
       ingredientF: (ingredientName) => `https://www.thecocktaildb.com/images/ingredients/${ingredientName}-Medium.png`
+=======
+      ingredientF: (ingredientName) =>
+        `https://www.thecocktaildb.com/images/ingredients/${ingredientName}-Medium.png`,
+>>>>>>> master:front.js
     },
   };
   var numberOfRndSuggestions = 3;
@@ -102,10 +110,17 @@ $(document).ready(function () {
     /* if (carouselInstance) {
           carouselInstance.destroy();
         } */
+<<<<<<< HEAD:WikiDrinks_research/front.js
             
     // Empty the ingredients carousel
     $('#ingredientsContent').empty();
     
+=======
+
+    // Empty the ingredients carousel
+    $("#ingredientsContent").empty();
+
+>>>>>>> master:front.js
     // Empty the instructions
     $("#preparationContent").empty();
 
@@ -116,7 +131,11 @@ $(document).ready(function () {
     $("#carouselBody").show();
     $(".preparationSection").show();
     $(".articlesSection").show();
+<<<<<<< HEAD:WikiDrinks_research/front.js
     $('#ingredientsContent').show();
+=======
+    $("#ingredientsContent").show();
+>>>>>>> master:front.js
 
     runAjax(
       "drinkSearch",
@@ -128,13 +147,18 @@ $(document).ready(function () {
   $("#searchButton").on("click", function (event) {
     //$("#drinkInpput").on("submit", function (event) {
     event.preventDefault();
+<<<<<<< HEAD:WikiDrinks_research/front.js
     
+=======
+
+>>>>>>> master:front.js
     cocktailName = $("#drinkInput").val();
     searchDrink(cocktailName);
     
   });
 
   /* --------------- Filter --------------- */
+<<<<<<< HEAD:WikiDrinks_research/front.js
   $(document).ready(function (){
     $("select.categoryFilter").change(function(){
       var selectCat = $(this).children("option:selected").val();
@@ -169,22 +193,71 @@ $(document).ready(function () {
       console.log("filter "+ cocktailName);
       searchDrink(cocktailName);
     };
+=======
+  $(document).ready(function () {
+    $("select.categoryFilter").change(function () {
+      var selectCat = $(this).children("option:selected").val();
+
+      runAjax(
+        "drinkSearch",
+        queryURLs.filter.categoryF(selectCat),
+        getDrinkName
+      );
+      $(this).formSelect();
+      $(this).children("option[value=main]").attr("selected", "");
+      // $(this).material_select();
+    });
+    $("select.ingredientFilter").change(function () {
+      var selectIng = $(this).children("option:selected").val();
+      runAjax(
+        "drinkSearch",
+        queryURLs.filter.ingredientF(selectIng),
+        getDrinkName
+      );
+    });
+    $("select.glassFilter").change(function () {
+      var selectGlass = $(this).children("option:selected").val();
+      runAjax(
+        "drinkSearch",
+        queryURLs.filter.glassF(selectGlass),
+        getDrinkName
+      );
+    });
+  });
+
+  function getDrinkName(name, resp) {
+    cocktailName = resp.drinks[Math.floor(Math.random() * 10)].strDrink;
+    console.log("filter " + cocktailName);
+    searchDrink(cocktailName);
+  }
+>>>>>>> master:front.js
   /* --------------- Drink ---------------- */
   // upload search results
   function uploadSearch(name, resp) {
     console.log("uploadSearch()");
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
+<<<<<<< HEAD:WikiDrinks_research/front.js
     $("#mainImage").attr("style", "background-image: url(" + resp.strDrinkThumb + ")");
+=======
+    $("#mainImage").attr(
+      "style",
+      "background-image: url(" + resp.strDrinkThumb + ")"
+    );
+>>>>>>> master:front.js
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
+    getArticles(resp.strDrink);
   }
 
   /* --------------- Ingredients ---------------- */
   function ingredients(resp) {
     console.log("ingredients()");
     $("#ingredientsList").empty();
+<<<<<<< HEAD:WikiDrinks_research/front.js
     
+=======
+>>>>>>> master:front.js
 
     // Get the ingredients list
     var ingrArray = [];
@@ -197,6 +270,7 @@ $(document).ready(function () {
 
     for (let j = 0; j < ingrArray.length; j++) {
       // Display ingredients list
+<<<<<<< HEAD:WikiDrinks_research/front.js
       var ingredText = $("<span>");
       ingredText.attr('class', 'ingredSpan');
       ingredText.text(ingrArray[j]);
@@ -217,6 +291,31 @@ $(document).ready(function () {
       ingredDiv.append(ingredImg);
       ingredDiv.append(ingredText);
       $('#ingredientsContent').append(ingredDiv);
+=======
+      var ingredText = $("<p>");
+      ingredText.attr("class", "ingredSpan");
+      ingredText.text(ingrArray[j]);
+      // $("#ingredientsList").append(ingredText);
+
+      // Area for ingredients image and text
+      var ingredDiv = $("<div>");
+      ingredDiv.attr("class", "ingredItemWrapDiv");
+
+      // Display ingredients images
+      var ingredient = ingrArray[j].replace(" ", "%20");
+      console.log("ingredient: ", ingredient);
+      var imageUrl =
+        "https://www.thecocktaildb.com/images/ingredients/" +
+        ingredient +
+        "-Medium.png";
+      console.log("imageUrl: ", imageUrl);
+      var ingredImg = $("<img>");
+      //ingredImg.attr('class', 'item');
+      ingredImg.attr("src", imageUrl);
+      ingredDiv.append(ingredImg);
+      ingredDiv.append(ingredText);
+      $("#ingredientsContent").append(ingredDiv);
+>>>>>>> master:front.js
     }
 
   }
@@ -252,6 +351,7 @@ $(document).ready(function () {
     console.log("instruc: ", instruc); */
     // Carousel
     var carouselItemDiv = $("<div>");
+<<<<<<< HEAD:WikiDrinks_research/front.js
     var gifItemDiv=$("<div>");
     var itemSpan=$("<div>")
 
@@ -264,6 +364,23 @@ $(document).ready(function () {
 
     itemSpan.text(instruc);
     
+=======
+    var gifItemDiv = $("<div>");
+    var itemSpan = $("<div>");
+
+    carouselItemDiv.attr("class", "col s12 m6 l6 pdnitem");
+    gifItemDiv.attr("class", "col s12 m6 l6 pdnitem");
+
+    var carouselItemImg = $("<img>");
+    carouselItemImg.attr(
+      "src",
+      resp.data[Math.floor(Math.random() * 10)].images.fixed_height.url
+    );
+    carouselItemImg.attr("class", "item");
+
+    itemSpan.text(instruc);
+
+>>>>>>> master:front.js
     carouselItemDiv.append(carouselItemImg);
 
     carouselItemDiv.append(itemSpan);
@@ -342,18 +459,27 @@ $(document).ready(function () {
     var cont1 = 0;
     for (let j = 0; j < steps.length; j++) {
       var temp = steps[j].toLowerCase();
+<<<<<<< HEAD:WikiDrinks_research/front.js
       var instruction = j + 1 + '. ' + steps[j];
       for (let i = 0; i < verbs.length; i++) {
         
         if (temp.search(verbs[i]) >= 0) {
             makegiphyURL(verbs[i], instruction, steps.length);
             break;
+=======
+      var instruction = j + 1 + ". " + steps[j];
+      for (let i = 0; i < verbs.length; i++) {
+        if (temp.search(verbs[i]) >= 0) {
+          makegiphyURL(verbs[i], instruction, steps.length);
+          break;
+>>>>>>> master:front.js
         }
       }
     }
     console.log("steps: ", steps);
   }
 
+<<<<<<< HEAD:WikiDrinks_research/front.js
 
   /* -------------- Articles ------------- */
   // NYT API Key: "3482b030-d24a-4b51-98c7-bcd752bbf0bb"
@@ -369,6 +495,85 @@ $(document).ready(function () {
   
 
   
+=======
+  /* -------------- Articles ------------- */
+
+  function getArticles(drink) {
+    console.log("getArticles()");
+    console.log("drink: ", drink);
+
+    // NYT API Key: "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy"
+    var nytApiKey = "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy";
+    var search = drink + "%20drink";
+    search = search.replace(" ", "%20");
+    var queryNYTUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${search}&api-key=${nytApiKey}`;
+    console.log("queryNYTUrl: ", queryNYTUrl);
+
+    runAjax("articlesContent", queryNYTUrl, displayArticles);
+  }
+
+  function displayArticles(name, resp) {
+    console.log("*********** displayArticles() ***********");
+    console.log("name: ", name);
+    console.log("resp: ", resp);
+    respArray = resp.response.docs;
+    console.log("respArray: ", respArray);
+
+    respArray.forEach(function (article) {
+      console.log("headline: ", article.headline.main);
+      console.log("snippet: ", article.snippet);
+      console.log("lead_paragraph: ", article.lead_paragraph);
+      console.log("web_url: ", article.web_url);
+      /* console.log(
+        "image: ",
+        "https://www.nytimes.com/" + article.multimedia[0].url
+      ); */
+
+      // Create the articles' elements
+      var colDiv = $("<div>");
+      var cardDiv = $("<div>");
+      var cardImageDiv = $("<div>");
+
+      var span = $("<span>");
+      var cardContentDiv = $("<div>");
+      var p = $("<p>");
+      var cardActionDiv = $("<div>");
+      var a = $("<a>");
+
+      colDiv.attr("class", "col s12 m6 l6");
+      cardDiv.attr("class", "card");
+      cardImageDiv.attr("class", "card-image");
+      if (article.multimedia.length > 0) {
+        var image = $("<img>");
+        image.attr(
+          "src",
+          "https://www.nytimes.com/" + article.multimedia[0].url
+        );
+        image.attr("class", "img-hgt");
+        cardImageDiv.append(image);
+      }
+
+      span.attr("class", "card-title lime darken-4");
+      span.text(article.headline.main);
+      cardContentDiv.attr("class", "card-content");
+      p.text(article.snippet);
+      cardActionDiv.attr("class", "card-action");
+      a.attr("href", article.web_url);
+      a.attr("target", "_blank");
+      a.text("Go to the article!");
+
+      cardImageDiv.append(span);
+      cardContentDiv.append(p);
+      cardActionDiv.append(a);
+      cardDiv.append(cardImageDiv);
+      cardDiv.append(cardContentDiv);
+      cardDiv.append(cardActionDiv);
+      colDiv.append(cardDiv);
+      $("#articlesContent").append(colDiv);
+    });
+  }
+
+>>>>>>> master:front.js
   /* -------------- Suggested ------------- */
   // Query Random Cocktail
   for (i = 0; i < numberOfRndSuggestions; i++) {
@@ -432,9 +637,15 @@ $(document).ready(function () {
   $("#carouselBody").hide();
   $(".preparationSection").hide();
   $(".articlesSection").hide();
+<<<<<<< HEAD:WikiDrinks_research/front.js
   $('#ingredientsContent').hide();
 
 /*Ingredients carousel*/
+=======
+  $("#ingredientsContent").hide();
+
+  /*Ingredients carousel*/
+>>>>>>> master:front.js
   const gap = 16;
 
   const carousel = document.getElementById("drinksCar"),
@@ -442,7 +653,11 @@ $(document).ready(function () {
     next = document.getElementById("next"),
     prev = document.getElementById("prev");
 
+<<<<<<< HEAD:WikiDrinks_research/front.js
   next.addEventListener("click", e => {
+=======
+  next.addEventListener("click", (e) => {
+>>>>>>> master:front.js
     carousel.scrollBy(width + gap, 0);
     if (carousel.scrollWidth !== 0) {
       prev.style.display = "flex";
@@ -451,7 +666,11 @@ $(document).ready(function () {
       next.style.display = "none";
     }
   });
+<<<<<<< HEAD:WikiDrinks_research/front.js
   prev.addEventListener("click", e => {
+=======
+  prev.addEventListener("click", (e) => {
+>>>>>>> master:front.js
     carousel.scrollBy(-(width + gap), 0);
     if (carousel.scrollLeft - width - gap <= 0) {
       prev.style.display = "none";
@@ -462,6 +681,10 @@ $(document).ready(function () {
   });
 
   let width = carousel.offsetWidth;
+<<<<<<< HEAD:WikiDrinks_research/front.js
   window.addEventListener("resize", e => (width = carousel.offsetWidth));
 
+=======
+  window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+>>>>>>> master:front.js
 });

@@ -191,7 +191,7 @@ $(document).ready(function () {
 
     carouselItemImg.attr("class", "d-block w-100");
     carouselItemImg.attr("alt", "Carousel instructions image");
-    carouselItemImg.attr("src", resp.data[(Math.floor(Math.random() * 26))].images.fixed_height.url);
+    carouselItemImg.attr("src", resp.data[(Math.floor(Math.random() * 10))].images.fixed_height.url);
     carouselItemImg.attr("SameSite", "strict");
     carouselCaptionDiv.attr("class", "carousel-caption d-none d-md-block");
     instructionH5.text(instruc);
