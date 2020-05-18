@@ -77,7 +77,7 @@ ul.dropdown-content.select-dropdown li span {
   text-align: center;
 }
 .drinkFixedWidth {
-  height: 500px;
+  height: 400px;
   background: transparent no-repeat center;
   background-size: cover;
 }
@@ -86,6 +86,13 @@ ul.dropdown-content.select-dropdown li span {
   text-align: center;
 }
 
+.cardhgt{
+  height: 400px;
+}
+.pmar{
+  padding-left: 5px;
+  padding-right: 5px;
+}
 /*carousel css*/
 #carouselBody {
   margin: 0;
@@ -94,7 +101,22 @@ ul.dropdown-content.select-dropdown li span {
   align-items: center;
   flex-direction: column;
 }
+
+#carouselBody2 {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 #wrapper {
+  width: 100%;
+  max-width: 964px;
+  position: relative;
+}
+
+#wrapper2 {
   width: 100%;
   max-width: 964px;
   position: relative;
@@ -106,12 +128,37 @@ ul.dropdown-content.select-dropdown li span {
   scrollbar-width: none;
 }
 
+#drinksCar2 {
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
 #drinksCar::-webkit-scrollbar {
+  height: 0;
+}
+
+#drinksCar2::-webkit-scrollbar {
   height: 0;
 }
 
 #prev,
 #next {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background: #827717;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  outline: 0;
+  cursor: pointer;
+  position: absolute;
+  color: white;
+}
+
+#prev2,
+#next2 {
   display: flex;
   justify-content: center;
   align-content: center;
@@ -133,12 +180,28 @@ ul.dropdown-content.select-dropdown li span {
   color: white;
 }
 
+#prev2 {
+  top: 50%;
+  left: 0;
+  transform: translate(50%, -50%);
+  display: none;
+  color: white;
+}
+
 #next {
   top: 50%;
   right: 0;
   transform: translate(-50%, -50%);
   color: white;
 }
+
+#next2 {
+  top: 50%;
+  right: 0;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
 
 #ingredientsContent {
   display: grid;
@@ -147,10 +210,22 @@ ul.dropdown-content.select-dropdown li span {
   margin: auto;
   box-sizing: border-box;
 }
-
+#preparationContent {
+  display: grid;
+  grid-gap: 16px;
+  grid-auto-flow: column;
+  margin: auto;
+  box-sizing: border-box;
+}
 .item {
-  width: 350px;
-  height: 300px;
+  width: 250px;
+  height: 200px;
+  background: transparent;
+}
+
+.item2 {
+  width: 400px;
+  height: 350px;
   background: transparent;
 }
 
