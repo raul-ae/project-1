@@ -106,6 +106,8 @@ $(document).ready(function () {
     // Empty the ingredients carousel
     $("#ingredientsContent").empty();
 
+    $("#articlesContent").empty();
+
     // Empty the instructions
     $("#preparationContent").empty();
 
@@ -208,7 +210,7 @@ $(document).ready(function () {
 
       // Area for ingredients image and text
       var ingredDiv = $("<div>");
-      ingredDiv.attr("class", "ingredItemWrapDiv");
+      //ingredDiv.attr("class", "ingredItemWrapDiv");
 
       // Display ingredients images
       var ingredient = ingrArray[j].replace(" ", "%20");
@@ -220,6 +222,7 @@ $(document).ready(function () {
       console.log("imageUrl: ", imageUrl);
       var ingredImg = $("<img>");
       //ingredImg.attr('class', 'item');
+      ingredImg.attr("class","item");
       ingredImg.attr("src", imageUrl);
       ingredDiv.append(ingredImg);
       ingredDiv.append(ingredText);
@@ -245,33 +248,25 @@ $(document).ready(function () {
 
   function getGiphies(name, resp, instruc, stepsLength) {
     console.log("getGiphies()");
-    /* console.log("name: ", name);
-    console.log("resp: ", resp);
-    console.log("url: ", resp.data[0].images.fixed_height.url);
-    console.log("instruc: ", instruc); */
+
     // Carousel
     var carouselItemDiv = $("<div>");
     var gifItemDiv = $("<div>");
     var itemSpan = $("<div>");
 
-    carouselItemDiv.attr("class", "col s12 m6 l6 pdnitem");
-    gifItemDiv.attr("class", "col s12 m6 l6 pdnitem");
 
     var carouselItemImg = $("<img>");
     carouselItemImg.attr(
       "src",
       resp.data[Math.floor(Math.random() * 10)].images.fixed_height.url
     );
-    carouselItemImg.attr("class", "item");
-
+    carouselItemImg.attr("class", "item2");
     itemSpan.text(instruc);
 
     carouselItemDiv.append(carouselItemImg);
-
     carouselItemDiv.append(itemSpan);
 
     $("#preparationContent").append(carouselItemDiv);
-    //$("#preparationContent").append(gifItemDiv);
 
     console.log("instruc: ", instruc);
     console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
@@ -399,8 +394,8 @@ $(document).ready(function () {
       var cardActionDiv = $("<div>");
       var a = $("<a>");
 
-      colDiv.attr("class", "col s12 m6 l6");
-      cardDiv.attr("class", "card");
+      colDiv.attr("class", "col s12 m4 l4");
+      cardDiv.addClass("card cardhgt");
       cardImageDiv.attr("class", "card-image");
       if (article.multimedia.length > 0) {
         var image = $("<img>");
@@ -411,11 +406,30 @@ $(document).ready(function () {
         image.attr("class", "img-hgt");
         cardImageDiv.append(image);
       }
+      else {
+        var image = $("<img>");
+        image.attr(
+          "src",
+          "https://www.theramblehotel.com/wp-content/uploads/2017/11/NYTimes.x59189.jpg"
+        );
+        image.attr("class", "img-hgt");
+        cardImageDiv.append(image);
+      }
 
-      span.attr("class", "card-title lime darken-4");
+      span.attr("class", "card-title lime darken-4 truncate");
       span.text(article.headline.main);
       cardContentDiv.attr("class", "card-content");
-      p.text(article.snippet);
+      //console.log(article.snippet)
+      if(article.snippet==null||article.snippet==""){
+        p.text(" ");
+        var br;
+        br=$("<br>");
+        p.append(br);
+      }else{
+        p.text(article.snippet);
+      }
+      //p.text(article.snippet);
+      p.attr("class", "truncate pmar")
       cardActionDiv.attr("class", "card-action");
       a.attr("href", article.web_url);
       a.attr("target", "_blank");
@@ -526,4 +540,35 @@ $(document).ready(function () {
 
   let width = carousel.offsetWidth;
   window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+
+
+
+  const gap2 = 16;
+
+  const carousel2 = document.getElementById("drinksCar2"),
+    content2 = document.getElementById("preparationContent"),
+    next2 = document.getElementById("next2"),
+    prev2 = document.getElementById("prev2");
+
+  next2.addEventListener("click", (e) => {
+    carousel2.scrollBy(width2 + gap2, 0);
+    if (carousel2.scrollWidth !== 0) {
+      prev2.style.display = "flex";
+    }
+    if (content2.scrollWidth - width2 - gap <= carousel2.scrollLeft + width2) {
+      next2.style.display = "none";
+    }
+  });
+  prev2.addEventListener("click", (e) => {
+    carousel2.scrollBy(-(width2 + gap2), 0);
+    if (carousel2.scrollLeft - width2 - gap2 <= 0) {
+      prev2.style.display = "none";
+    }
+    if (!content2.scrollWidth - width2 - gap2 <= carousel2.scrollLeft + width2) {
+      next2.style.display = "flex";
+    }
+  });
+
+  let width2 = carousel2.offsetWidth;
+  window.addEventListener("resize", (e) => (width2 = carousel2.offsetWidth));
 });
