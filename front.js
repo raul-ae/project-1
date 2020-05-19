@@ -109,6 +109,9 @@ $(document).ready(function () {
     // Empty the instructions
     $("#preparationContent").empty();
 
+    // Empty the articles
+    $("#articlesContent").empty();
+
     //localStorage.setItem("last", drink);
     //location.reload();
     $(".introSlider").hide();
@@ -363,7 +366,7 @@ $(document).ready(function () {
 
     // NYT API Key: "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy"
     var nytApiKey = "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy";
-    var search = drink + "%20drink";
+    var search = drink + "%20cocktail";
     search = search.replace(" ", "%20");
     var queryNYTUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${search}&api-key=${nytApiKey}`;
     console.log("queryNYTUrl: ", queryNYTUrl);
