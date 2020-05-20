@@ -210,10 +210,18 @@ $(document).ready(function () {
     //console.log("uploadSearch()");
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
-    $("#mainImage").attr(
+    var mainImageJumbo=$("#mainImage");
+    var mainImg=$("<img>");
+   /* $("#mainImage").attr(
       "style",
       "background-image: url(" + resp.strDrinkThumb + ")"
-    );
+    );*/
+    
+    mainImg.attr("src",resp.strDrinkThumb)
+    mainImg.addClass("centerImg");
+    mainImageJumbo.append(mainImg);
+    mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3")
+    //mainImageJumbo.addClass("drinkFixedWidth");
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
     getArticles(resp.strDrink);
@@ -314,7 +322,7 @@ $(document).ready(function () {
     //carouselItemImg.attr("class", "item2");
     itemSpan.text(instruc);
     prepStepHead.text("Step "+(cont2+1));
-
+    carouselItemImg.addClass("item");
     prepStepBody.append(itemSpan);
     prepStepBody.append(carouselItemImg);
     prepStep.append(prepStepHead);
@@ -431,14 +439,6 @@ $(document).ready(function () {
     respArray.forEach(function (article) {
       
       if(contaArt<3){
-         //console.log("headline: ", article.headline.main);
-      //console.log("snippet: ", article.snippet);
-      //console.log("lead_paragraph: ", article.lead_paragraph);
-      //console.log("web_url: ", article.web_url);
-      /* console.log(
-        "image: ",
-        "https://www.nytimes.com/" + article.multimedia[0].url
-      ); */
 
       // Create the articles' elements
       var colDiv = $("<div>");

@@ -75,11 +75,25 @@ ul.dropdown-content.select-dropdown li span {
 .drinktxtcol {
   color: white;
   text-align: center;
+  height: 100%;
 }
+
+#mainImage{
+  padding-bottom: 30px;
+}
+
 .drinkFixedWidth {
-  height: 400px;
-  background: transparent no-repeat center;
-  background-size: cover;
+  width: 200px;
+  text-align: center;
+  /*background: transparent no-repeat center;
+  background-size: cover;*/
+}
+
+.centerImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .ingredSpan {
