@@ -10,6 +10,37 @@ $(document).ready(function () {
   /* var instance = M.Carousel.getInstance(elem);
   $(".carousel").carousel(); */
 
+  /*Ingredients carousel*/
+  const gap = 16;
+
+  const carousel = document.getElementById("drinksCar"),
+    content = document.getElementById("ingredientsContent"),
+    next = document.getElementById("next"),
+    prev = document.getElementById("prev");
+
+  next.addEventListener("click", (e) => {
+    carousel.scrollBy(width + gap, 0);
+    if (carousel.scrollWidth !== 0) {
+      prev.style.display = "flex";
+    }
+    if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "none";
+    }
+  });
+  prev.addEventListener("click", (e) => {
+    carousel.scrollBy(-(width + gap), 0);
+    if (carousel.scrollLeft - width - gap <= 0) {
+      prev.style.display = "none";
+    }
+    if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "flex";
+    }
+  });
+
+  let width = carousel.offsetWidth;
+
+  window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+
   /* ********************* Global Variables ********************** */
 
   var category;
@@ -265,40 +296,33 @@ $(document).ready(function () {
   
     instance.open(0);
 
-    // Carousel
-    var carouselItemDiv = $("<div>");
-    var gifItemDiv = $("<div>");
-    var itemSpan = $("<div>");
-
     var prepCollapsibleSection=$("#preparationCollap");
 
     var prepStep=$("<li>");
     var prepStepHead=$("<div>");
     var prepStepBody=$("<div>");
-
-    prepStepHead.addClass("collapsible-header");
-    prepStepBody.addClass("collapsible-body");
-
+    var itemSpan = $("<div>");
     var carouselItemImg = $("<img>");
+
+    prepStepHead.addClass("collapsible-header prepStep");
+    prepStepBody.addClass("collapsible-body");
+    prepStepBody.attr("style","text-align:center");
     carouselItemImg.attr(
       "src",
       resp.data[Math.floor(Math.random() * 10)].images.fixed_height.url
     );
-    carouselItemImg.attr("class", "item2");
+    //carouselItemImg.attr("class", "item2");
     itemSpan.text(instruc);
-    prepStepHead.text("Step: "+(cont2+1));
+    prepStepHead.text("Step "+(cont2+1));
 
     prepStepBody.append(itemSpan);
     prepStepBody.append(carouselItemImg);
-  
-    //$("#preparationContent").append(carouselItemDiv);
-
     prepStep.append(prepStepHead);
     prepStep.append(prepStepBody);
     prepCollapsibleSection.append(prepStep);
 
-    console.log("instruc: ", instruc);
-    console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
+    //console.log("instruc: ", instruc);
+    //console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
     if (cont2 == stepsLength - 1) {
       // Initialize Instructions Carousel
       $("#preparationContent").carousel();
@@ -443,7 +467,7 @@ $(document).ready(function () {
         var image = $("<img>");
         image.attr(
           "src",
-          "https://www.theramblehotel.com/wp-content/uploads/2017/11/NYTimes.x59189.jpg"
+          "./nylogo.jpg"
         );
         image.attr("class", "img-hgt");
         cardImageDiv.append(image);
@@ -547,36 +571,7 @@ $(document).ready(function () {
   $(".articlesSection").hide();
   $("#ingredientsContent").hide();
 
-  /*Ingredients carousel*/
-  const gap = 16;
-
-  const carousel = document.getElementById("drinksCar"),
-    content = document.getElementById("ingredientsContent"),
-    next = document.getElementById("next"),
-    prev = document.getElementById("prev");
-
-  next.addEventListener("click", (e) => {
-    carousel.scrollBy(width + gap, 0);
-    if (carousel.scrollWidth !== 0) {
-      prev.style.display = "flex";
-    }
-    if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
-      next.style.display = "none";
-    }
-  });
-  prev.addEventListener("click", (e) => {
-    carousel.scrollBy(-(width + gap), 0);
-    if (carousel.scrollLeft - width - gap <= 0) {
-      prev.style.display = "none";
-    }
-    if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
-      next.style.display = "flex";
-    }
-  });
-
-  let width = carousel.offsetWidth;
-
-  window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+  
 
   /*const gap2 = 16;
 
