@@ -75,11 +75,25 @@ ul.dropdown-content.select-dropdown li span {
 .drinktxtcol {
   color: white;
   text-align: center;
+  height: 100%;
 }
+
+#mainImage{
+  padding-bottom: 30px;
+}
+
 .drinkFixedWidth {
-  height: 400px;
-  background: transparent no-repeat center;
-  background-size: cover;
+  width: 200px;
+  text-align: center;
+  /*background: transparent no-repeat center;
+  background-size: cover;*/
+}
+
+.centerImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .ingredSpan {
@@ -102,21 +116,7 @@ ul.dropdown-content.select-dropdown li span {
   flex-direction: column;
 }
 
-#carouselBody2 {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
 #wrapper {
-  width: 100%;
-  max-width: 964px;
-  position: relative;
-}
-
-#wrapper2 {
   width: 100%;
   max-width: 964px;
   position: relative;
@@ -128,37 +128,12 @@ ul.dropdown-content.select-dropdown li span {
   scrollbar-width: none;
 }
 
-#drinksCar2 {
-  overflow: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-}
-
 #drinksCar::-webkit-scrollbar {
-  height: 0;
-}
-
-#drinksCar2::-webkit-scrollbar {
   height: 0;
 }
 
 #prev,
 #next {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  background: #827717;
-  border: none;
-  padding: 8px;
-  border-radius: 50%;
-  outline: 0;
-  cursor: pointer;
-  position: absolute;
-  color: white;
-}
-
-#prev2,
-#next2 {
   display: flex;
   justify-content: center;
   align-content: center;
@@ -180,28 +155,12 @@ ul.dropdown-content.select-dropdown li span {
   color: white;
 }
 
-#prev2 {
-  top: 50%;
-  left: 0;
-  transform: translate(50%, -50%);
-  display: none;
-  color: white;
-}
-
 #next {
   top: 50%;
   right: 0;
   transform: translate(-50%, -50%);
   color: white;
 }
-
-#next2 {
-  top: 50%;
-  right: 0;
-  transform: translate(-50%, -50%);
-  color: white;
-}
-
 
 #ingredientsContent {
   display: grid;
@@ -218,17 +177,15 @@ ul.dropdown-content.select-dropdown li span {
   box-sizing: border-box;
 }
 .item {
-  width: 250px;
+  width: 200px;
   height: 200px;
-  background: transparent;
-}
-
-.item2 {
-  width: 400px;
-  height: 350px;
   background: transparent;
 }
 
 .ingredItemWrapDiv {
   text-align: center;
+}
+
+.prepStep{
+  font-weight: bold;
 }

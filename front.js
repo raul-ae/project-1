@@ -10,6 +10,37 @@ $(document).ready(function () {
   /* var instance = M.Carousel.getInstance(elem);
   $(".carousel").carousel(); */
 
+  /*Ingredients carousel*/
+  const gap = 16;
+
+  const carousel = document.getElementById("drinksCar"),
+    content = document.getElementById("ingredientsContent"),
+    next = document.getElementById("next"),
+    prev = document.getElementById("prev");
+
+  next.addEventListener("click", (e) => {
+    carousel.scrollBy(width + gap, 0);
+    if (carousel.scrollWidth !== 0) {
+      prev.style.display = "flex";
+    }
+    if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "none";
+    }
+  });
+  prev.addEventListener("click", (e) => {
+    carousel.scrollBy(-(width + gap), 0);
+    if (carousel.scrollLeft - width - gap <= 0) {
+      prev.style.display = "none";
+    }
+    if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "flex";
+    }
+  });
+
+  let width = carousel.offsetWidth;
+
+  window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+
   /* ********************* Global Variables ********************** */
 
   var category;
@@ -67,7 +98,7 @@ $(document).ready(function () {
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
   function runAjax(name, url, thenFunction, instruc, stepsLength) {
-    console.log("runAjax() - " + name);
+    //console.log("runAjax() - " + name);
     $.ajax({
       url: url,
       method: "GET",
@@ -110,6 +141,7 @@ $(document).ready(function () {
 
     // Empty the instructions
     $("#preparationContent").empty();
+    $("#preparationCollap").empty();
 
     // Empty the articles
     $("#articlesContent").empty();
@@ -172,19 +204,27 @@ $(document).ready(function () {
 
   function getDrinkName(name, resp) {
     cocktailName = resp.drinks[Math.floor(Math.random() * 10)].strDrink;
-    console.log("filter " + cocktailName);
+    //console.log("filter " + cocktailName);
     searchDrink(cocktailName);
   }
   /* --------------- Drink ---------------- */
   // upload search results
   function uploadSearch(name, resp) {
-    console.log("uploadSearch()");
+    //console.log("uploadSearch()");
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
-    $("#mainImage").attr(
+    var mainImageJumbo=$("#mainImage");
+    var mainImg=$("<img>");
+   /* $("#mainImage").attr(
       "style",
       "background-image: url(" + resp.strDrinkThumb + ")"
-    );
+    );*/
+    
+    mainImg.attr("src",resp.strDrinkThumb)
+    mainImg.addClass("centerImg");
+    mainImageJumbo.append(mainImg);
+    mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3")
+    //mainImageJumbo.addClass("drinkFixedWidth");
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
     getArticles(resp.strDrink);
@@ -192,7 +232,7 @@ $(document).ready(function () {
 
   /* --------------- Ingredients ---------------- */
   function ingredients(resp) {
-    console.log("ingredients()");
+    //console.log("ingredients()");
     $("#ingredientsList").empty();
 
     // Get the ingredients list
@@ -217,12 +257,12 @@ $(document).ready(function () {
 
       // Display ingredients images
       var ingredient = ingrArray[j].replace(" ", "%20");
-      console.log("ingredient: ", ingredient);
+      //console.log("ingredient: ", ingredient);
       var imageUrl =
         "https://www.thecocktaildb.com/images/ingredients/" +
         ingredient +
         "-Medium.png";
-      console.log("imageUrl: ", imageUrl);
+      //console.log("imageUrl: ", imageUrl);
       var ingredImg = $("<img>");
       //ingredImg.attr('class', 'item');
       ingredImg.attr("class","item");
@@ -235,10 +275,10 @@ $(document).ready(function () {
   }
 
   function getIngredientImage(name, resp) {
-    console.log('getIngredientImage()');
-    console.log('********** RESP **********');
-    console.log('name: ', name);
-    console.log('resp: ', resp);
+    //console.log('getIngredientImage()');
+    //console.log('********** RESP **********');
+    //console.log('name: ', name);
+    //console.log('resp: ', resp);
   }
 
   /* --------------- Preparation --------------- */
@@ -260,27 +300,40 @@ $(document).ready(function () {
   function getGiphies(name, resp, instruc, stepsLength) {
     console.log("getGiphies()");
 
-    // Carousel
-    var carouselItemDiv = $("<div>");
-    var gifItemDiv = $("<div>");
+    var elem = document.querySelector('.collapsible');
+    var instance = M.Collapsible.init(elem, {
+      accordion: false
+    });
+  
+    instance.open(0);
+
+    var prepCollapsibleSection=$("#preparationCollap");
+
+    var prepStep=$("<li>");
+    var prepStepHead=$("<div>");
+    var prepStepBody=$("<div>");
     var itemSpan = $("<div>");
-
-
     var carouselItemImg = $("<img>");
+
+    prepStepHead.addClass("collapsible-header prepStep");
+    prepStepBody.addClass("collapsible-body");
+    prepStepBody.attr("style","text-align:center");
     carouselItemImg.attr(
       "src",
       resp.data[Math.floor(Math.random() * 10)].images.fixed_height.url
     );
-    carouselItemImg.attr("class", "item2");
+    //carouselItemImg.attr("class", "item2");
     itemSpan.text(instruc);
+    prepStepHead.text("Step "+(cont2+1));
+    carouselItemImg.addClass("item");
+    prepStepBody.append(itemSpan);
+    prepStepBody.append(carouselItemImg);
+    prepStep.append(prepStepHead);
+    prepStep.append(prepStepBody);
+    prepCollapsibleSection.append(prepStep);
 
-    carouselItemDiv.append(carouselItemImg);
-    carouselItemDiv.append(itemSpan);
-
-    $("#preparationContent").append(carouselItemDiv);
-
-    console.log("instruc: ", instruc);
-    console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
+    //console.log("instruc: ", instruc);
+    //console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
     if (cont2 == stepsLength - 1) {
       // Initialize Instructions Carousel
       $("#preparationContent").carousel();
@@ -364,35 +417,31 @@ $(document).ready(function () {
   /* -------------- Articles ------------- */
 
   function getArticles(drink) {
-    console.log("getArticles()");
-    console.log("drink: ", drink);
+    //console.log("getArticles()");
+    //console.log("drink: ", drink);
 
     // NYT API Key: "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy"
     var nytApiKey = "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy";
     var search = drink + "%20cocktail";
     search = search.replace(" ", "%20");
     var queryNYTUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${search}&api-key=${nytApiKey}`;
-    console.log("queryNYTUrl: ", queryNYTUrl);
+    //console.log("queryNYTUrl: ", queryNYTUrl);
 
     runAjax("articlesContent", queryNYTUrl, displayArticles);
   }
 
-  function displayArticles(name, resp) {
-    console.log("*********** displayArticles() ***********");
-    console.log("name: ", name);
-    console.log("resp: ", resp);
-    respArray = resp.response.docs;
-    console.log("respArray: ", respArray);
 
+  function displayArticles(name, resp) {
+    //console.log("*********** displayArticles() ***********");
+    //console.log("name: ", name);
+    //console.log("resp: ", resp);
+    respArray = resp.response.docs;
+    //console.log("respArray: ", respArray);
+    var contaArt=0;
+ 
     respArray.forEach(function (article) {
-      console.log("headline: ", article.headline.main);
-      console.log("snippet: ", article.snippet);
-      console.log("lead_paragraph: ", article.lead_paragraph);
-      console.log("web_url: ", article.web_url);
-      /* console.log(
-        "image: ",
-        "https://www.nytimes.com/" + article.multimedia[0].url
-      ); */
+      
+      if(contaArt<3){
 
       // Create the articles' elements
       var colDiv = $("<div>");
@@ -421,7 +470,7 @@ $(document).ready(function () {
         var image = $("<img>");
         image.attr(
           "src",
-          "https://www.theramblehotel.com/wp-content/uploads/2017/11/NYTimes.x59189.jpg"
+          "./nylogo.jpg"
         );
         image.attr("class", "img-hgt");
         cardImageDiv.append(image);
@@ -454,6 +503,9 @@ $(document).ready(function () {
       cardDiv.append(cardActionDiv);
       colDiv.append(cardDiv);
       $("#articlesContent").append(colDiv);
+      };
+      contaArt++;
+     
     });
   }
 
@@ -466,8 +518,8 @@ $(document).ready(function () {
   function uploadSuggested(name, res) {
     res = res.drinks[0];
 
-    console.log("res.strDrink: ", res.strDrink);
-    console.log("res.strDrinkThumb :", res.strDrinkThumb);
+    //console.log("res.strDrink: ", res.strDrink);
+    //console.log("res.strDrinkThumb :", res.strDrinkThumb);
 
     var colDiv = $("<div>");
     var cardDiv = $("<div>");
@@ -508,7 +560,7 @@ $(document).ready(function () {
 
     cocktailName = event.target.getAttribute("drink");
     if (cocktailName != undefined) {
-      console.log("cocktailName: ", cocktailName);
+      //console.log("cocktailName: ", cocktailName);
       localStorage.setItem("last", cocktailName);
       searchDrink(cocktailName);
     }
@@ -522,38 +574,9 @@ $(document).ready(function () {
   $(".articlesSection").hide();
   $("#ingredientsContent").hide();
 
-  /*Ingredients carousel*/
-  const gap = 16;
+  
 
-  const carousel = document.getElementById("drinksCar"),
-    content = document.getElementById("ingredientsContent"),
-    next = document.getElementById("next"),
-    prev = document.getElementById("prev");
-
-  next.addEventListener("click", (e) => {
-    carousel.scrollBy(width + gap, 0);
-    if (carousel.scrollWidth !== 0) {
-      prev.style.display = "flex";
-    }
-    if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
-      next.style.display = "none";
-    }
-  });
-  prev.addEventListener("click", (e) => {
-    carousel.scrollBy(-(width + gap), 0);
-    if (carousel.scrollLeft - width - gap <= 0) {
-      prev.style.display = "none";
-    }
-    if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
-      next.style.display = "flex";
-    }
-  });
-
-  let width = carousel.offsetWidth;
-
-  window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
-
-  const gap2 = 16;
+  /*const gap2 = 16;
 
   const carousel2 = document.getElementById("drinksCar2"),
     content2 = document.getElementById("preparationContent"),
@@ -580,5 +603,5 @@ $(document).ready(function () {
   });
 
   let width2 = carousel2.offsetWidth;
-  window.addEventListener("resize", (e) => (width2 = carousel2.offsetWidth));
+  window.addEventListener("resize", (e) => (width2 = carousel2.offsetWidth));*/
 });

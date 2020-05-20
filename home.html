@@ -89,23 +89,21 @@
         <ul class="slides">
           <li class="lime darken-3">
             <img src="https://www.laguiago.com/wp-content/uploads/2019/09/alicantec.jpeg"> <!-- random image -->
-            <div class="caption right-align">
-              <h3>Random drink!</h3>
-              <a href="#"><h5 class="light grey-text text-lighten-3">Go to the Drink!</h5></a>
+            <div class="caption center-align">
+              <p></p>
+              <h3>Welcome to WikiDrinks!</h3>
             </div>
           </li>
           <li>
             <img src="https://media.laguiago.com/wp-content/uploads/2019/09/cocktails-web.jpg"> <!-- random image -->
-            <div class="caption right-align">
-              <h3>Random drink!</h3>
-              <a href="#"><h5 class="light grey-text text-lighten-3">Go to the Drink!</h5></a>
+            <div class="caption left-align">
+              <h3><br><br><br><br><br>Search for your preferred drink</h3>
             </div>
           </li>
           <li>
             <img src="https://okdiario.com/img/2019/08/20/receta-de-cocktail-margarita-1-655x368.jpg"><!-- random image -->
             <div class="caption right-align">
-              <h3>Random drink!</h3>
-              <a href="#"><h5 class="light grey-text text-lighten-3">Go to the Drink!</h5></a>
+              <h3><br><br>Or get a suggested drink </h3>
             </div>
           </li>
         </ul>
@@ -123,6 +121,14 @@
       <!-- Drink -->
       <div class="col s12 m12 l12 lime darken-4 drinktxtcol">
         <h4 id="drinkNameH4">Drink name</h4>
+        <div class="col s12 m12 l12">
+          <div class="card centerImg">
+            <div class="card-image"  
+            id="mainImage">
+
+            </div>
+          </div>
+        </div>
       </div> <!-- /Drink -->
 
       <!-- Ingredients 
@@ -165,21 +171,19 @@
     </div> <!-- /Ingredients Carousel -->
 
     <div class="row drinkIngredSection">
-      <!-- Drink Image -->
+      <div style="text-align: center;"><h5>Preparation</h5></div>
       <div class="col s12 m12 l12">
-        <div class="card">
-          <div class="card-image drinkFixedWidth" 
-          style="background-image: url(https://image.shutterstock.com/z/stock-photo-vintage-lamps-with-blurred-liquor-bar-1184574109.jpg)" 
-          id="mainImage">
-          </div>
-        </div>
-      </div> <!-- Drink Image -->
+        <ul class="collapsible" id="preparationCollap">
+        </ul>
+      </div>
+      <!-- Drink Image -->
+ <!-- Drink Image -->
     </div>
 
-    <!-- Preparation -->
+    <!-- Preparation 
     <div class="row preparationSection" id="carouselBody2">
       <h5>Preparation</h5>
-      <!--<div class="col s12 m12 l12 borderRecipe"> -->
+
         <div id="wrapper2">
           <div id="drinksCar2">
             <div id="preparationContent">
@@ -210,8 +214,8 @@
           </button>
         </div>
 
-      <!--</div>-->
-    </div> <!-- /Instructions -->
+      </div>
+    </div> /Instructions -->
 
 
     <!-- Articles -->
@@ -222,41 +226,6 @@
 
       <div id="articlesContent">
 
-      <!-- <div class="col s12 m6 l6">
-        <div class="card">
-          <div class="card-image">
-            <img src="https://image.shutterstock.com/z/stock-photo-vintage-lamps-with-blurred-liquor-bar-1184574109.jpg"
-              class="img-hgt">
-            <span class="card-title lime darken-4">Article Title</span>
-          </div>
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
-          </div>
-          <div class="card-action">
-            <a href="#">Go to the Article!</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m6 l6">
-        <div class="card">
-          <div class="card-image">
-            <img
-              src="https://www.ritzparis.com/sites/default/files/styles/1440x748/public/images/card_page/slideshow/ritz-paris-hotel-bar-hemingway-1_1.jpg?itok=_EVzsnE2"
-              class="img-hgt">
-            <span class="card-title lime darken-4">Article Title</span>
-          </div>
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
-          </div>
-          <div class="card-action">
-            <a href="#">Go to the Article!</a>
-          </div>
-        </div>
-      </div> -->
-
       </div>
 
     </div> <!-- /Articles -->
@@ -265,12 +234,11 @@
     <!-- Suggested Drinks -->
     <div class="row" id="suggestedDrk">
       <h5>
-        Suggested Drinks:
+        Suggested Drinks
       </h5>
       <div class="randomSuggest">
       </div>
     </div> <!-- /Suggested Drinks -->
-
   </div>
 
 
@@ -282,10 +250,9 @@
           <p class="grey-text text-lighten-4">You can figure out how to prepare your favorite drink in this site.</p>
         </div>
         <div class="col l4 offset-l2 s12">
-          <h5 class="white-text">Most popular drinks</h5>
+          <h5 class="white-text"></h5>
           <ul>
-            <li><a class="grey-text text-lighten-4" href="#!">Mojito</a></li>
-            <li><a class="grey-text text-lighten-4" href="#!">Paloma</a></li>
+            <li><a class="grey-text text-lighten-4" href="#!"></a></li>
           </ul>
         </div>
       </div>
