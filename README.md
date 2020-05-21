@@ -116,4 +116,4 @@ The project was uploaded to [GitHub](https://github.com/) at the following repos
 [https://github.com/raul-ae/project-1](https://github.com/raul-ae/project-1)
 
 You can access the deployed application with the GitHup Pages link:
-[xxx](xxx)
+[https://raul-ae.github.io/project-1/](https://raul-ae.github.io/project-1/)
