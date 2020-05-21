@@ -6,6 +6,7 @@ $(document).ready(function () {
   // Home - Intro Slider
   $(".slider").slider();
 
+  // Initialize Instructions Carousel
   /*Ingredients carousel*/
   const gap = 16;
 
@@ -110,19 +111,13 @@ $(document).ready(function () {
   function searchDrink(drink) {
     cont2 = 0;
 
-
     // Empty the ingredients carousel
     $("#ingredientsContent").empty();
-
-    $("#articlesContent").empty();
 
     // Empty the instructions
     $("#preparationContent").empty();
     $("#preparationCollap").empty();
-
-    // Empty the image
     $("#mainImage").empty();
-
     // Empty the articles
     $("#articlesContent").empty();
     $(".introSlider").hide();
@@ -192,7 +187,6 @@ $(document).ready(function () {
     mainImg.addClass("centerImg");
     mainImageJumbo.append(mainImg);
     mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3")
-
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
     getArticles(resp.strDrink);
@@ -233,6 +227,10 @@ $(document).ready(function () {
       ingredDiv.append(ingredText);
       $("#ingredientsContent").append(ingredDiv);
     }
+  }
+
+  function getIngredientImage(name, resp) {
+
   }
 
   /* --------------- Preparation --------------- */
@@ -366,7 +364,6 @@ $(document).ready(function () {
   /* -------------- Articles ------------- */
 
   function getArticles(drink) {
-    // NYT API Key: "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy"
     var nytApiKey = "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy";
     var search = drink + "%20cocktail";
     search = search.replace(" ", "%20");
@@ -375,6 +372,8 @@ $(document).ready(function () {
   }
 
   function displayArticles(name, resp) {
+    //("*********** displayArticles() ***********")
+
     respArray = resp.response.docs;
     var contaArt=0;
  
