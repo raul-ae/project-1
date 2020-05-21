@@ -7,9 +7,6 @@ $(document).ready(function () {
   $(".slider").slider();
 
   // Initialize Instructions Carousel
-  /* var instance = M.Carousel.getInstance(elem);
-  $(".carousel").carousel(); */
-
   /*Ingredients carousel*/
   const gap = 16;
 
@@ -98,7 +95,6 @@ $(document).ready(function () {
   /* ************************** Functions ************************ */
   /* --------------- Global --------------- */
   function runAjax(name, url, thenFunction, instruc, stepsLength) {
-    //console.log("runAjax() - " + name);
     $.ajax({
       url: url,
       method: "GET",
@@ -110,16 +106,7 @@ $(document).ready(function () {
   }
 
   function reStart() {
-    /*
-    $(".carousel-indicators").empty();
-    $(".carousel").empty();
-    cont = 0; // Reset from getGiphies
-    cocktailName = localStorage.getItem("last");
-    runAjax(
-      "drinkSearch",
-      queryURLs.search.cocktailByNameF(cocktailName),
-      uploadSearch
-    ); */
+
   }
 
   /* --------------- Search --------------- */
@@ -127,27 +114,15 @@ $(document).ready(function () {
   function searchDrink(drink) {
     cont2 = 0;
 
-    // Empty the carousel
-    //$(".borderRecipe").empty();
-    /* if (carouselInstance) {
-          carouselInstance.destroy();
-        } */
-
     // Empty the ingredients carousel
     $("#ingredientsContent").empty();
-
-
-    $("#articlesContent").empty();
 
     // Empty the instructions
     $("#preparationContent").empty();
     $("#preparationCollap").empty();
-
+    $("#mainImage").empty();
     // Empty the articles
     $("#articlesContent").empty();
-
-    //localStorage.setItem("last", drink);
-    //location.reload();
     $(".introSlider").hide();
     $(".drinkIngredSection").show();
     $("#carouselBody").show();
@@ -163,7 +138,6 @@ $(document).ready(function () {
   }
 
   $("#searchButton").on("click", function (event) {
-    //$("#drinkInpput").on("submit", function (event) {
     event.preventDefault();
     cocktailName = $("#drinkInput").val();
     searchDrink(cocktailName);
@@ -182,7 +156,6 @@ $(document).ready(function () {
       );
       $(this).formSelect();
       $(this).children("option[value=main]").attr("selected", "");
-      // $(this).material_select();
     });
     $("select.ingredientFilter").change(function () {
       var selectIng = $(this).children("option:selected").val();
@@ -204,27 +177,20 @@ $(document).ready(function () {
 
   function getDrinkName(name, resp) {
     cocktailName = resp.drinks[Math.floor(Math.random() * 10)].strDrink;
-    //console.log("filter " + cocktailName);
     searchDrink(cocktailName);
   }
   /* --------------- Drink ---------------- */
   // upload search results
   function uploadSearch(name, resp) {
-    //console.log("uploadSearch()");
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
     var mainImageJumbo=$("#mainImage");
     var mainImg=$("<img>");
-   /* $("#mainImage").attr(
-      "style",
-      "background-image: url(" + resp.strDrinkThumb + ")"
-    );*/
     
     mainImg.attr("src",resp.strDrinkThumb)
     mainImg.addClass("centerImg");
     mainImageJumbo.append(mainImg);
     mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3")
-    //mainImageJumbo.addClass("drinkFixedWidth");
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
     getArticles(resp.strDrink);
@@ -232,7 +198,6 @@ $(document).ready(function () {
 
   /* --------------- Ingredients ---------------- */
   function ingredients(resp) {
-    //console.log("ingredients()");
     $("#ingredientsList").empty();
 
     // Get the ingredients list
@@ -249,22 +214,17 @@ $(document).ready(function () {
       var ingredText = $("<p>");
       ingredText.attr("class", "ingredSpan");
       ingredText.text(ingrArray[j]);
-      // $("#ingredientsList").append(ingredText);
 
       // Area for ingredients image and text
       var ingredDiv = $("<div>");
-      //ingredDiv.attr("class", "ingredItemWrapDiv");
 
       // Display ingredients images
       var ingredient = ingrArray[j].replace(" ", "%20");
-      //console.log("ingredient: ", ingredient);
       var imageUrl =
         "https://www.thecocktaildb.com/images/ingredients/" +
         ingredient +
         "-Medium.png";
-      //console.log("imageUrl: ", imageUrl);
       var ingredImg = $("<img>");
-      //ingredImg.attr('class', 'item');
       ingredImg.attr("class","item");
       ingredImg.attr("src", imageUrl);
       ingredDiv.append(ingredImg);
@@ -275,10 +235,7 @@ $(document).ready(function () {
   }
 
   function getIngredientImage(name, resp) {
-    //console.log('getIngredientImage()');
-    //console.log('********** RESP **********');
-    //console.log('name: ', name);
-    //console.log('resp: ', resp);
+
   }
 
   /* --------------- Preparation --------------- */
@@ -322,7 +279,7 @@ $(document).ready(function () {
       "src",
       resp.data[Math.floor(Math.random() * 10)].images.fixed_height.url
     );
-    //carouselItemImg.attr("class", "item2");
+
     itemSpan.text(instruc);
     prepStepHead.text("Step "+(cont2+1));
     carouselItemImg.addClass("item");
@@ -332,8 +289,6 @@ $(document).ready(function () {
     prepStep.append(prepStepBody);
     prepCollapsibleSection.append(prepStep);
 
-    //console.log("instruc: ", instruc);
-    //console.log("cont2: ", cont2, " stepsLength: ", stepsLength);
     if (cont2 == stepsLength - 1) {
       // Initialize Instructions Carousel
       $("#preparationContent").carousel();
@@ -399,7 +354,6 @@ $(document).ready(function () {
       "cream",
       "served",
     ];
-    // var verbInstr = [];
     var cont1 = 0;
     for (let j = 0; j < steps.length; j++) {
       var temp = steps[j].toLowerCase();
@@ -417,26 +371,19 @@ $(document).ready(function () {
   /* -------------- Articles ------------- */
 
   function getArticles(drink) {
-    //console.log("getArticles()");
-    //console.log("drink: ", drink);
-
-    // NYT API Key: "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy"
     var nytApiKey = "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy";
     var search = drink + "%20cocktail";
     search = search.replace(" ", "%20");
     var queryNYTUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${search}&api-key=${nytApiKey}`;
-    //console.log("queryNYTUrl: ", queryNYTUrl);
 
     runAjax("articlesContent", queryNYTUrl, displayArticles);
   }
 
 
   function displayArticles(name, resp) {
-    //console.log("*********** displayArticles() ***********");
-    //console.log("name: ", name);
-    //console.log("resp: ", resp);
+    //("*********** displayArticles() ***********")
+
     respArray = resp.response.docs;
-    //console.log("respArray: ", respArray);
     var contaArt=0;
  
     respArray.forEach(function (article) {
@@ -444,7 +391,7 @@ $(document).ready(function () {
       if(contaArt<3){
 
       // Create the articles' elements
-      var colDiv = $("<div>");
+      var colDiv = $("<article>");
       var cardDiv = $("<div>");
       var cardImageDiv = $("<div>");
 
@@ -479,7 +426,6 @@ $(document).ready(function () {
       span.attr("class", "card-title lime darken-4 truncate");
       span.text(article.headline.main);
       cardContentDiv.attr("class", "card-content");
-      //console.log(article.snippet)
       if(article.snippet==null||article.snippet==""){
         p.text(" ");
         var br;
@@ -488,7 +434,6 @@ $(document).ready(function () {
       }else{
         p.text(article.snippet);
       }
-      //p.text(article.snippet);
       p.attr("class", "truncate pmar")
       cardActionDiv.attr("class", "card-action");
       a.attr("href", article.web_url);
@@ -517,9 +462,6 @@ $(document).ready(function () {
 
   function uploadSuggested(name, res) {
     res = res.drinks[0];
-
-    //console.log("res.strDrink: ", res.strDrink);
-    //console.log("res.strDrinkThumb :", res.strDrinkThumb);
 
     var colDiv = $("<div>");
     var cardDiv = $("<div>");
@@ -554,9 +496,6 @@ $(document).ready(function () {
   $(".randomSuggest").on("click", function (event) {
     event.preventDefault();
     $(window).scrollTop(0);
-    /* console.log("event: ", event);
-    console.log("event.target: ", event.target);
-    console.log("$(this): ", $(this)); */
 
     cocktailName = event.target.getAttribute("drink");
     if (cocktailName != undefined) {
@@ -574,34 +513,4 @@ $(document).ready(function () {
   $(".articlesSection").hide();
   $("#ingredientsContent").hide();
 
-  
-
-  /*const gap2 = 16;
-
-  const carousel2 = document.getElementById("drinksCar2"),
-    content2 = document.getElementById("preparationContent"),
-    next2 = document.getElementById("next2"),
-    prev2 = document.getElementById("prev2");
-
-  next2.addEventListener("click", (e) => {
-    carousel2.scrollBy(width2 + gap2, 0);
-    if (carousel2.scrollWidth !== 0) {
-      prev2.style.display = "flex";
-    }
-    if (content2.scrollWidth - width2 - gap <= carousel2.scrollLeft + width2) {
-      next2.style.display = "none";
-    }
-  });
-  prev2.addEventListener("click", (e) => {
-    carousel2.scrollBy(-(width2 + gap2), 0);
-    if (carousel2.scrollLeft - width2 - gap2 <= 0) {
-      prev2.style.display = "none";
-    }
-    if (!content2.scrollWidth - width2 - gap2 <= carousel2.scrollLeft + width2) {
-      next2.style.display = "flex";
-    }
-  });
-
-  let width2 = carousel2.offsetWidth;
-  window.addEventListener("resize", (e) => (width2 = carousel2.offsetWidth));*/
 });
