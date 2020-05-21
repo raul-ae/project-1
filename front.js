@@ -85,7 +85,8 @@ $(document).ready(function () {
     },
 
     image: {
-      ingredientF: (ingredientName) => `https://www.thecocktaildb.com/images/ingredients/${ingredientName}-Medium.png`
+      ingredientF: (ingredientName) =>
+        `https://www.thecocktaildb.com/images/ingredients/${ingredientName}-Medium.png`,
     },
   };
   var numberOfRndSuggestions = 3;
@@ -113,12 +114,14 @@ $(document).ready(function () {
     // Empty the ingredients carousel
     $("#ingredientsContent").empty();
 
-
     $("#articlesContent").empty();
 
     // Empty the instructions
     $("#preparationContent").empty();
     $("#preparationCollap").empty();
+
+    // Empty the image
+    $("#mainImage").empty();
 
     // Empty the articles
     $("#articlesContent").empty();
@@ -140,7 +143,6 @@ $(document).ready(function () {
     event.preventDefault();
     cocktailName = $("#drinkInput").val();
     searchDrink(cocktailName);
-    
   });
 
   /* --------------- Filter --------------- */
@@ -183,12 +185,14 @@ $(document).ready(function () {
   function uploadSearch(name, resp) {
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
+
     var mainImageJumbo=$("#mainImage");
     var mainImg=$("<img>");
     mainImg.attr("src",resp.strDrinkThumb)
     mainImg.addClass("centerImg");
     mainImageJumbo.append(mainImg);
     mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3")
+
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
     getArticles(resp.strDrink);
@@ -229,7 +233,6 @@ $(document).ready(function () {
       ingredDiv.append(ingredText);
       $("#ingredientsContent").append(ingredDiv);
     }
-
   }
 
   /* --------------- Preparation --------------- */
@@ -251,30 +254,30 @@ $(document).ready(function () {
   function getGiphies(name, resp, instruc, stepsLength) {
     console.log("getGiphies()");
 
-    var elem = document.querySelector('.collapsible');
+    var elem = document.querySelector(".collapsible");
     var instance = M.Collapsible.init(elem, {
-      accordion: false
+      accordion: false,
     });
-  
+
     instance.open(0);
 
-    var prepCollapsibleSection=$("#preparationCollap");
+    var prepCollapsibleSection = $("#preparationCollap");
 
-    var prepStep=$("<li>");
-    var prepStepHead=$("<div>");
-    var prepStepBody=$("<div>");
+    var prepStep = $("<li>");
+    var prepStepHead = $("<div>");
+    var prepStepBody = $("<div>");
     var itemSpan = $("<div>");
     var carouselItemImg = $("<img>");
 
     prepStepHead.addClass("collapsible-header prepStep");
     prepStepBody.addClass("collapsible-body");
-    prepStepBody.attr("style","text-align:center");
+    prepStepBody.attr("style", "text-align:center");
     carouselItemImg.attr(
       "src",
       resp.data[Math.floor(Math.random() * 10)].images.fixed_height.url
     );
     itemSpan.text(instruc);
-    prepStepHead.text("Step "+(cont2+1));
+    prepStepHead.text("Step " + (cont2 + 1));
     carouselItemImg.addClass("item");
     prepStepBody.append(itemSpan);
     prepStepBody.append(carouselItemImg);
@@ -371,47 +374,42 @@ $(document).ready(function () {
     runAjax("articlesContent", queryNYTUrl, displayArticles);
   }
 
-
   function displayArticles(name, resp) {
     respArray = resp.response.docs;
     var contaArt=0;
  
+
     respArray.forEach(function (article) {
-      
-      if(contaArt<3){
+      if (contaArt < 3) {
+        // Create the articles' elements
+        var colDiv = $("<div>");
+        var cardDiv = $("<div>");
+        var cardImageDiv = $("<div>");
 
-      // Create the articles' elements
-      var colDiv = $("<div>");
-      var cardDiv = $("<div>");
-      var cardImageDiv = $("<div>");
+        var span = $("<span>");
+        var cardContentDiv = $("<div>");
+        var p = $("<p>");
+        var cardActionDiv = $("<div>");
+        var a = $("<a>");
 
-      var span = $("<span>");
-      var cardContentDiv = $("<div>");
-      var p = $("<p>");
-      var cardActionDiv = $("<div>");
-      var a = $("<a>");
+        colDiv.attr("class", "col s12 m4 l4");
+        cardDiv.addClass("card cardhgt");
+        cardImageDiv.attr("class", "card-image");
+        if (article.multimedia.length > 0) {
+          var image = $("<img>");
+          image.attr(
+            "src",
+            "https://www.nytimes.com/" + article.multimedia[0].url
+          );
+          image.attr("class", "img-hgt");
+          cardImageDiv.append(image);
+        } else {
+          var image = $("<img>");
+          image.attr("src", "./nylogo.jpg");
+          image.attr("class", "img-hgt");
+          cardImageDiv.append(image);
+        }
 
-      colDiv.attr("class", "col s12 m4 l4");
-      cardDiv.addClass("card cardhgt");
-      cardImageDiv.attr("class", "card-image");
-      if (article.multimedia.length > 0) {
-        var image = $("<img>");
-        image.attr(
-          "src",
-          "https://www.nytimes.com/" + article.multimedia[0].url
-        );
-        image.attr("class", "img-hgt");
-        cardImageDiv.append(image);
-      }
-      else {
-        var image = $("<img>");
-        image.attr(
-          "src",
-          "./nylogo.jpg"
-        );
-        image.attr("class", "img-hgt");
-        cardImageDiv.append(image);
-      }
 
       span.attr("class", "card-title lime darken-4 truncate");
       span.text(article.headline.main);
@@ -439,8 +437,8 @@ $(document).ready(function () {
       colDiv.append(cardDiv);
       $("#articlesContent").append(colDiv);
       };
+
       contaArt++;
-     
     });
   }
 
