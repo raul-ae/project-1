@@ -110,7 +110,6 @@ $(document).ready(function () {
   function searchDrink(drink) {
     cont2 = 0;
 
-
     // Empty the ingredients carousel
     $("#ingredientsContent").empty();
 
@@ -148,6 +147,7 @@ $(document).ready(function () {
   /* --------------- Filter --------------- */
   $(document).ready(function () {
     $("select.categoryFilter").change(function () {
+      runUploadSuggested();
       var selectCat = $(this).children("option:selected").val();
 
       runAjax(
@@ -159,6 +159,7 @@ $(document).ready(function () {
       $(this).children("option[value=main]").attr("selected", "");
     });
     $("select.ingredientFilter").change(function () {
+      runUploadSuggested();
       var selectIng = $(this).children("option:selected").val();
       runAjax(
         "drinkSearch",
@@ -167,6 +168,7 @@ $(document).ready(function () {
       );
     });
     $("select.glassFilter").change(function () {
+      runUploadSuggested();
       var selectGlass = $(this).children("option:selected").val();
       runAjax(
         "drinkSearch",
@@ -186,12 +188,12 @@ $(document).ready(function () {
     resp = resp.drinks[0];
     $("#drinkNameH4").text(resp.strDrink);
 
-    var mainImageJumbo=$("#mainImage");
-    var mainImg=$("<img>");
-    mainImg.attr("src",resp.strDrinkThumb)
+    var mainImageJumbo = $("#mainImage");
+    var mainImg = $("<img>");
+    mainImg.attr("src", resp.strDrinkThumb);
     mainImg.addClass("centerImg");
     mainImageJumbo.append(mainImg);
-    mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3")
+    mainImageJumbo.addClass("col s12 m6 offset-m3 l6 offset-l3");
 
     ingredients(resp);
     instructionsSteps(resp.strInstructions);
@@ -227,7 +229,7 @@ $(document).ready(function () {
         ingredient +
         "-Medium.png";
       var ingredImg = $("<img>");
-      ingredImg.attr("class","item");
+      ingredImg.attr("class", "item");
       ingredImg.attr("src", imageUrl);
       ingredDiv.append(ingredImg);
       ingredDiv.append(ingredText);
@@ -352,7 +354,7 @@ $(document).ready(function () {
     var cont1 = 0;
     for (let j = 0; j < steps.length; j++) {
       var temp = steps[j].toLowerCase();
-      var instruction = j + 1 + ". " + steps[j];
+      var instruction = steps[j];
       for (let i = 0; i < verbs.length; i++) {
         if (temp.search(verbs[i]) >= 0) {
           makegiphyURL(verbs[i], instruction, steps.length);
@@ -376,8 +378,7 @@ $(document).ready(function () {
 
   function displayArticles(name, resp) {
     respArray = resp.response.docs;
-    var contaArt=0;
- 
+    var contaArt = 0;
 
     respArray.forEach(function (article) {
       if (contaArt < 3) {
@@ -410,33 +411,32 @@ $(document).ready(function () {
           cardImageDiv.append(image);
         }
 
+        span.attr("class", "card-title lime darken-4 truncate");
+        span.text(article.headline.main);
+        cardContentDiv.attr("class", "card-content");
+        if (article.snippet == null || article.snippet == "") {
+          p.text(" ");
+          var br;
+          br = $("<br>");
+          p.append(br);
+        } else {
+          p.text(article.snippet);
+        }
+        p.attr("class", "truncate pmar");
+        cardActionDiv.attr("class", "card-action");
+        a.attr("href", article.web_url);
+        a.attr("target", "_blank");
+        a.text("Go to the article!");
 
-      span.attr("class", "card-title lime darken-4 truncate");
-      span.text(article.headline.main);
-      cardContentDiv.attr("class", "card-content");
-      if(article.snippet==null||article.snippet==""){
-        p.text(" ");
-        var br;
-        br=$("<br>");
-        p.append(br);
-      }else{
-        p.text(article.snippet);
+        cardImageDiv.append(span);
+        cardContentDiv.append(p);
+        cardActionDiv.append(a);
+        cardDiv.append(cardImageDiv);
+        cardDiv.append(cardContentDiv);
+        cardDiv.append(cardActionDiv);
+        colDiv.append(cardDiv);
+        $("#articlesContent").append(colDiv);
       }
-      p.attr("class", "truncate pmar")
-      cardActionDiv.attr("class", "card-action");
-      a.attr("href", article.web_url);
-      a.attr("target", "_blank");
-      a.text("Go to the article!");
-
-      cardImageDiv.append(span);
-      cardContentDiv.append(p);
-      cardActionDiv.append(a);
-      cardDiv.append(cardImageDiv);
-      cardDiv.append(cardContentDiv);
-      cardDiv.append(cardActionDiv);
-      colDiv.append(cardDiv);
-      $("#articlesContent").append(colDiv);
-      };
 
       contaArt++;
     });
@@ -444,11 +444,22 @@ $(document).ready(function () {
 
   /* -------------- Suggested ------------- */
   // Query Random Cocktail
-  for (i = 0; i < numberOfRndSuggestions; i++) {
-    runAjax("randomSuggest", queryURLs.lookup.randomCocktail, uploadSuggested);
+  function runUploadSuggested() {
+    // Empty suggested drinks
+    $(".randomSuggest").empty();
+
+    // Trigger new ones
+    for (i = 0; i < numberOfRndSuggestions; i++) {
+      runAjax(
+        "randomSuggest",
+        queryURLs.lookup.randomCocktail,
+        uploadSuggested
+      );
+    }
   }
 
   function uploadSuggested(name, res) {
+    console.log("uploadSuggested()");
     res = res.drinks[0];
     var colDiv = $("<div>");
     var cardDiv = $("<div>");
@@ -491,7 +502,7 @@ $(document).ready(function () {
   });
 
   /* ********************** Event Listeners ********************** */
-
+  runUploadSuggested();
   $(".drinkIngredSection").hide();
   $("#carouselBody").hide();
   $(".preparationSection").hide();
