@@ -6,6 +6,7 @@ $(document).ready(function () {
   // Home - Intro Slider
   $(".slider").slider();
 
+  // Initialize Instructions Carousel
   /*Ingredients carousel*/
   const gap = 16;
 
@@ -39,12 +40,7 @@ $(document).ready(function () {
 
   /* ********************* Global Variables ********************** */
 
-  var category;
-  var glass;
-  var cocktailID;
-  var ingredientID;
   var cocktailName;
-  var ingredientName;
   var queryURLs = {
     list: {
       categories: "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list",
@@ -113,15 +109,10 @@ $(document).ready(function () {
     // Empty the ingredients carousel
     $("#ingredientsContent").empty();
 
-    $("#articlesContent").empty();
-
     // Empty the instructions
     $("#preparationContent").empty();
     $("#preparationCollap").empty();
-
-    // Empty the image
     $("#mainImage").empty();
-
     // Empty the articles
     $("#articlesContent").empty();
     $(".introSlider").hide();
@@ -236,6 +227,8 @@ $(document).ready(function () {
       $("#ingredientsContent").append(ingredDiv);
     }
   }
+
+  function getIngredientImage(name, resp) {}
 
   /* --------------- Preparation --------------- */
   // Giphy API Key: Sp3oGCbMvYRfzhcYM1UYmYgytqt3FXW7
@@ -368,7 +361,6 @@ $(document).ready(function () {
   /* -------------- Articles ------------- */
 
   function getArticles(drink) {
-    // NYT API Key: "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy"
     var nytApiKey = "udLO1ruXioDP6Gmk5Cx7jACQtzpCrdmy";
     var search = drink + "%20cocktail";
     search = search.replace(" ", "%20");
@@ -377,6 +369,8 @@ $(document).ready(function () {
   }
 
   function displayArticles(name, resp) {
+    //("*********** displayArticles() ***********")
+
     respArray = resp.response.docs;
     var contaArt = 0;
 
